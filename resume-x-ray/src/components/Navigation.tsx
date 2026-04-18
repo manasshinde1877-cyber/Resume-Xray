@@ -1,12 +1,9 @@
 "use client";
 
 import React from "react";
-import { Eye, EyeOff, Shield, Activity, Fingerprint } from "lucide-react";
-import { useBlindMode } from "@/context/BlindModeContext";
-import { motion } from "framer-motion";
+import { Shield, Activity, Fingerprint, Sparkles } from "lucide-react";
 
 export function Navigation() {
-  const { isBlindMode, toggleBlindMode } = useBlindMode();
 
   return (
     <nav className="fixed top-0 left-0 right-0 h-16 bg-slate-950/80 backdrop-blur-md border-b border-slate-800 z-50 flex items-center justify-between px-6">
@@ -33,33 +30,17 @@ export function Navigation() {
           Validation Arena
         </a>
         <a 
+          href="/catalyst" 
+          className="text-sm font-medium text-cyan-400 border border-cyan-500/20 bg-cyan-500/5 px-3 py-1 rounded-full hover:bg-cyan-500/10 transition flex items-center gap-2"
+        >
+          <Sparkles className="w-4 h-4" /> Contribution Catalyst
+        </a>
+        <a 
           href="/" 
           className="text-sm font-medium text-slate-300 hover:text-cyan-400 transition"
         >
           Dashboard
         </a>
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={toggleBlindMode}
-          className={`px-4 py-2 rounded-full flex items-center gap-2 text-sm font-medium transition-colors ${
-            isBlindMode
-              ? "bg-amber-500/10 text-amber-500 border border-amber-500/20"
-              : "bg-slate-800 hover:bg-slate-700 text-slate-300"
-          }`}
-        >
-          {isBlindMode ? (
-            <>
-              <Shield className="w-4 h-4" />
-              Blind Mode: ON
-            </>
-          ) : (
-            <>
-              <Eye className="w-4 h-4" />
-              Blind Mode: OFF
-            </>
-          )}
-        </motion.button>
       </div>
     </nav>
   );

@@ -7,17 +7,22 @@ const groq = new Groq({
 
 export async function POST(req: NextRequest) {
   try {
-    const { text } = await req.json();
+    const { text, recruiterRequirements } = await req.json();
 
     if (!text) {
       return NextResponse.json({ error: "Missing text in request" }, { status: 400 });
     }
+
+    const requirementContext = recruiterRequirements 
+      ? `PERSONAL RECRUITER REQUIREMENTS: "${recruiterRequirements}". Analyze the resume SPECIFICALLY with these requirements in mind. Highlight how they meet or fail these requirements in the human_report.`
+      : "";
 
     const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "system",
           content: `You are an elite AI Recruiter and Deep Semantic Engine for 'ResumeX-Ray'.
+${requirementContext}
 Input: Text extracted from a resume.
 Task: Parse this text into a strict JSON object with the following schema:
 {
@@ -29,7 +34,7 @@ Task: Parse this text into a strict JSON object with the following schema:
   },
   "human_report": {
     "high_impact_points": string[], // Impactful phrases found
-    "red_flags": string[], // Anything that might worry a human (gaps, vague terms)
+    "red_flags": string[], // Anything that might worry a human (gaps, vague terms, or failures to meet the PERSONAL requirements)
   },
   "prescription": string[], // 3-5 very specific, simple action items to fix the resume
   "pii_entities": string[]

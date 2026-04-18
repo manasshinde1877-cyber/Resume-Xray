@@ -11,6 +11,7 @@ export default function Home() {
   const [analysis, setAnalysis] = useState<any | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [recruiterRequirements, setRecruiterRequirements] = useState("");
 
   const processFile = async (file: File) => {
     try {
@@ -47,7 +48,10 @@ export default function Home() {
       const analyzeRes = await fetch('/api/analyze', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: fullText })
+        body: JSON.stringify({ 
+          text: fullText,
+          recruiterRequirements: recruiterRequirements.trim() || undefined
+        })
       });
 
       const analyzeData = await analyzeRes.json();
@@ -87,11 +91,24 @@ export default function Home() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
           {/* Left Column */}
           <div className="lg:col-span-1 flex flex-col gap-6 relative">
-            <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[300px]">
+            <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[250px]">
               <h2 className="text-xl font-semibold mb-4 text-cyan-400">Ingestion Canvas</h2>
               <div className="flex-1 relative z-10">
                 <IngestionCanvas onAnalyze={processFile} />
               </div>
+            </section>
+
+            <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
+              <h3 className="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Recruiter Requirements</h3>
+              <textarea
+                value={recruiterRequirements}
+                onChange={(e) => setRecruiterRequirements(e.target.value)}
+                placeholder="Ex: Needs 3+ years in Rust, must be based in London, or expert in high-frequency trading..."
+                className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 text-sm text-slate-300 focus:outline-none focus:ring-1 focus:ring-cyan-500/50 min-h-[120px] resize-none"
+              />
+              <p className="text-[10px] text-slate-600 mt-2 italic">
+                These will be used to weight the Recruiter Perspective analytics.
+              </p>
             </section>
 
             <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col relative overflow-hidden flex-1">
