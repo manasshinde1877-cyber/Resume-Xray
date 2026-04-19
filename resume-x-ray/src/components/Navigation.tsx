@@ -35,6 +35,8 @@ export function Navigation() {
   const handleLogout = async () => {
     try {
       await logoutUser();
+      localStorage.removeItem('dev_bypass_user');
+      localStorage.removeItem('REDACTED_BY_DEFAULT');
       window.location.href = "/";
     } catch (err) {
       console.error("Logout failed", err);
