@@ -33,7 +33,7 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="flex flex-col bg-background text-foreground selection:bg-primary-green/30 overflow-x-hidden">
+      <body suppressHydrationWarning className="flex flex-col bg-background text-foreground selection:bg-primary-green/30 overflow-x-hidden">
         <BlindModeProvider>
           <AuthProvider>
             <SmoothScrollProvider>

@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Groq from "groq-sdk";
 
+export const maxDuration = 120; // 120s timeout for vision model
+
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
@@ -47,13 +49,13 @@ export async function POST(req: NextRequest) {
     }
 
     // Fallback: Use Groq Llama 3.2 Vision (Blazing fast and robust)
-    console.log("Using Groq Llama-3.2-Vision fallback...");
+    console.log("Using Fast Llama-3.2-11b-Vision...");
     const completion = await groq.chat.completions.create({
       messages: [
         {
           role: "user",
           content: [
-            { type: "text", text: "Transcribe the text in this resume exactly. Maintain the structure as much as possible. Focus on capturing all experience, skills, and contact info." },
+            { type: "text", text: "Extract all text from this resume image. Maintain the content and structure." },
             {
               type: "image_url",
               image_url: {
@@ -64,6 +66,7 @@ export async function POST(req: NextRequest) {
         },
       ],
       model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      temperature: 0,
     });
 
     const transcribedText = completion.choices[0]?.message?.content || "";

@@ -6,7 +6,7 @@ import { ArrowRight, Sparkles, LogIn, UserPlus, ShieldCheck, Mail, Lock, Chevron
 import Link from "next/link";
 import { RepellingCubes } from "@/components/RepellingCubes";
 
-import { registerUser, loginUser } from "@/lib/firebase/auth";
+import { registerUser, loginUser, loginWithGoogle, loginWithApple } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
@@ -33,6 +33,32 @@ export default function LandingPage() {
       router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Auth failed: Check details");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleAuth = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      await loginWithGoogle();
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Google Auth failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAppleAuth = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      await loginWithApple();
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Apple Auth failed");
     } finally {
       setLoading(false);
     }
@@ -262,6 +288,36 @@ export default function LandingPage() {
                     {loading ? "Decrypting..." : (authMode === "login" ? "Enter Workspace" : "Create Account")}
                     {!loading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
                   </button>
+
+                  <div className="relative my-8">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-primary-green/10"></div>
+                    </div>
+                    <div className="relative flex justify-center text-[10px] uppercase tracking-widest font-bold">
+                      <span className="bg-white px-4 text-primary-green/30">Or Securely Access via</span>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col md:flex-row gap-3">
+                    <button 
+                      onClick={handleGoogleAuth}
+                      disabled={loading}
+                      className="flex-1 py-4 bg-white border border-primary-green/20 text-primary-green font-bold rounded-xl md:rounded-2xl hover:bg-primary-green/5 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
+                    >
+                      <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-4 h-4" alt="Google" />
+                      Google
+                    </button>
+
+                    <button 
+                      onClick={handleAppleAuth}
+                      disabled={loading}
+                      className="flex-1 py-4 bg-black text-white font-bold rounded-xl md:rounded-2xl hover:bg-zinc-900 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
+                    >
+                      {/* Apple SVG Icon */}
+                      <svg viewBox="0 0 384 512" className="w-4 h-4 fill-current"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 21.8-88.5 21.8-11.4 0-51.1-20.8-83.6-20.1-41.2.9-82 23.3-103.1 60.1-23.5 40.8-18 107.9 4.3 172.6 11.2 32.2 26 67.2 49 90.5 22.1 22.3 45.8 47 74.4 46 28.1-1.1 38.2-18.1 77.7-18.1s48.6 18.1 77.7 17.1c28.2-1.1 51.5-22.1 73.6-45.2 22.5-23.5 31.5-46.3 31.7-47.5-.6-.3-61.2-23.5-61.5-93l-.1.1zM303 12.1c-15-18.7-49.9-13.5-67.4 8.7-19.1 24.5-15.2 59.6 12.4 76 2.3 1.5 51.3 20 68.6-23.5 5.9-14.9 1.5-42.5-13.6-61.2z"/></svg>
+                      Apple
+                    </button>
+                  </div>
                 </div>
               </motion.div>
 

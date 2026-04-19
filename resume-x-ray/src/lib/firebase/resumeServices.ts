@@ -4,7 +4,8 @@ import {
   getDocs, 
   query, 
   where, 
-  serverTimestamp 
+  serverTimestamp,
+  orderBy
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { db, storage } from "./config";
@@ -47,7 +48,11 @@ export const uploadResumeAndSave = async (
 
 export const getUserResumes = async (userId: string): Promise<ResumeAnalysis[]> => {
   try {
-    const q = query(collection(db, "resumes"), where("userId", "===", userId));
+    const q = query(
+      collection(db, "resumes"), 
+      where("userId", "==", userId),
+      orderBy("createdAt", "desc")
+    );
     const querySnapshot = await getDocs(q);
     const resumes: ResumeAnalysis[] = [];
     querySnapshot.forEach((doc) => {

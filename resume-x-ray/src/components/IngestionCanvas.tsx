@@ -6,7 +6,7 @@ import { UploadCloud, File as FileIcon, X, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface IngestionCanvasProps {
-  onAnalyze: (file: File) => void;
+  onAnalyze: (file: File) => Promise<void>;
 }
 
 export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
@@ -26,12 +26,20 @@ export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
       "image/png": [".png"],
     },
     maxFiles: 1,
+    noDragEventsBubbling: true,
   });
 
-  const handleAnalyze = () => {
+  const handleAnalyze = async () => {
     if (file) {
-      setIsProcessing(true);
-      onAnalyze(file);
+      try {
+        setIsProcessing(true);
+        await onAnalyze(file);
+        setFile(null); // clear after success
+      } catch {
+        // error is handled by parent
+      } finally {
+        setIsProcessing(false);
+      }
     }
   };
 
@@ -44,7 +52,11 @@ export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
     <div className="flex flex-col h-full gap-4">
       <AnimatePresence mode="wait">
         {!file ? (
-          <div {...getRootProps()} className="flex-1 flex flex-col h-full">
+          <div 
+            {...getRootProps()} 
+            data-lenis-prevent 
+            className="flex-1 flex flex-col h-full relative z-50"
+          >
             <motion.div
               key="dropzone"
               initial={{ opacity: 0 }}
@@ -52,15 +64,15 @@ export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
               exit={{ opacity: 0 }}
               className={`flex-1 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-6 cursor-pointer transition-colors ${
                 isDragActive
-                  ? "border-cyan-400 bg-cyan-400/10"
-                  : "border-slate-700/50 bg-slate-950/50 hover:bg-slate-800/50 hover:border-cyan-400/50"
+                  ? "border-sage bg-primary-green/10 scale-[1.02]"
+                  : "border-primary-green/30 bg-primary-green/5 hover:bg-primary-green/10 hover:border-sage/50"
               }`}
             >
               <input {...getInputProps()} />
-              <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center mb-4 text-slate-400 group-hover:text-cyan-400">
+              <div className="w-16 h-16 rounded-full bg-primary-green/10 flex items-center justify-center mb-4 text-sage">
                 <UploadCloud className="w-8 h-8" />
               </div>
-              <p className="text-center text-slate-300 font-medium mb-1">
+              <p className="text-center text-slate-700 font-medium mb-1">
                 {isDragActive ? "Drop resume here..." : "Drag & Drop Resume"}
               </p>
               <p className="text-center text-slate-500 text-sm">
