@@ -32,32 +32,26 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="flex flex-col bg-slate-950 text-slate-50 selection:bg-cyan-500/30 overflow-x-hidden">
+      <body className="flex flex-col bg-background text-foreground selection:bg-primary-green/30 overflow-x-hidden">
         <BlindModeProvider>
           <SmoothScrollProvider>
-            {/* Interactive global backgrounds — beneath all content */}
-            <FloatingSpheres />
-            <MouseReactiveGrid />
-            {/* Ambient purple radial glow top-right */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none fixed top-0 right-0 w-[700px] h-[700px] rounded-full z-0"
-              style={{
-                background: "radial-gradient(circle at 70% 20%, rgba(139,92,246,0.07) 0%, transparent 65%)",
-              }}
-            />
-            {/* Ambient cyan radial glow bottom-left */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none fixed bottom-0 left-0 w-[500px] h-[500px] rounded-full z-0"
-              style={{
-                background: "radial-gradient(circle at 30% 80%, rgba(6,182,212,0.05) 0%, transparent 60%)",
-              }}
-            />
-            <div className="relative z-10 flex flex-col min-h-full">
-              <Navigation />
-              {children}
-            </div>
+              <div className="relative flex flex-col min-h-screen">
+                <Navigation />
+                
+                {/* 1. LAYER: Backgrounds (-z-20) */}
+                {/* 2. LAYER: Spheres (-z-10) */}
+                <div className="fixed inset-0 pointer-events-none -z-10">
+                  <FloatingSpheres />
+                </div>
+                
+                {/* 3. LAYER: Reactive Grid (z-5) */}
+                <MouseReactiveGrid />
+
+                {/* 4. LAYER: Page Content (z-10+) */}
+                <div className="relative flex-grow z-10">
+                  {children}
+                </div>
+              </div>
           </SmoothScrollProvider>
         </BlindModeProvider>
       </body>

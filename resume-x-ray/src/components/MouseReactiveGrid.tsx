@@ -63,13 +63,9 @@ export function MouseReactiveGrid() {
           const alpha = BASE_ALPHA + (PEAK_ALPHA - BASE_ALPHA) * eased;
 
           // Interpolate color: slate-600 (#475569) → cyan (#06b6d4)
-          const rr = Math.round(71 + (6 - 71) * eased);
-          const g = Math.round(85 + (182 - 85) * eased);
-          const b = Math.round(105 + (212 - 105) * eased);
-
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${rr},${g},${b},${alpha})`;
+          ctx.fillStyle = `rgba(153, 173, 122, ${alpha})`;
           ctx.fill();
         }
       }
@@ -90,7 +86,7 @@ export function MouseReactiveGrid() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
+      className="fixed inset-0 pointer-events-none z-[5]"
     />
   );
 }

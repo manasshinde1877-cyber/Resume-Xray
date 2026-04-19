@@ -269,8 +269,8 @@ export default function ValidationArena() {
       <main className="pt-20 px-6 min-h-screen pb-12 flex flex-col gap-6 max-w-[1600px] mx-auto w-full">
         <header className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-cyan-400">Validation Arena</h1>
-            <p className="text-slate-400 mt-2">Dynamic skill-gap generation & code validation.</p>
+            <h1 className="text-3xl font-bold text-sage">Validation Arena</h1>
+            <p className="text-primary-green/60 mt-2">Dynamic skill-gap generation & code validation.</p>
           </div>
 
           <motion.button
@@ -279,8 +279,8 @@ export default function ValidationArena() {
             onClick={() => setIsLockedIn(!isLockedIn)}
             className={`px-6 py-3 rounded-xl border-2 transition-all flex items-center gap-3 font-bold uppercase tracking-widest text-xs ${
               isLockedIn 
-                ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
-                : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
+                ? 'bg-primary-green/20 border-primary-green text-sage shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
+                : 'bg-white/80 border-primary-green/20 text-slate-500 hover:border-slate-700'
             }`}
           >
             <Shield className={`w-4 h-4 ${isLockedIn ? 'animate-pulse' : ''}`} />
@@ -294,7 +294,7 @@ export default function ValidationArena() {
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`w-48 h-12 rounded-full overflow-hidden border-2 bg-slate-900/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-3 ${proctorStatus === 'active' ? 'border-cyan-500/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
+            className={`w-48 h-12 rounded-full overflow-hidden border-2 bg-white/80/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-3 ${proctorStatus === 'active' ? 'border-primary-green/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
           >
              <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
                 <video ref={videoRef} className="w-full h-full object-cover grayscale opacity-70" muted playsInline />
@@ -303,10 +303,10 @@ export default function ValidationArena() {
              
              <div className="flex flex-col flex-1 overflow-hidden">
                 <div className="flex items-center justify-between">
-                   <span className="text-[8px] font-bold font-mono text-cyan-400 uppercase tracking-widest">Neural Proctor</span>
+                   <span className="text-[8px] font-bold font-mono text-sage uppercase tracking-widest">Neural Proctor</span>
                    <div className={`w-1.5 h-1.5 rounded-full ${proctorStatus === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-red-500 animate-ping'}`} />
                 </div>
-                <p className="text-[7px] text-slate-400 font-mono truncate">
+                <p className="text-[7px] text-primary-green/60 font-mono truncate">
                    {proctorWarning ? `⚠️ ${proctorWarning}` : "Presence Verified"}
                 </p>
              </div>
@@ -316,23 +316,23 @@ export default function ValidationArena() {
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
 
-          <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-purple-400">
+          <section className="bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col">
+            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-tan">
               <Zap className="w-5 h-5" /> Dynamic Project Generator
             </h2>
             
-            <div className="bg-slate-950 rounded-xl p-4 min-h-[150px] border border-slate-800 flex flex-col justify-center">
+            <div className="bg-primary-green/5 rounded-xl p-4 min-h-[150px] border border-primary-green/20 flex flex-col justify-center">
               {isGenerating ? (
                 <p className="text-slate-500 animate-pulse text-center">Detecting skill gaps...</p>
               ) : projectIdea ? (
                 <>
-                  <p className="text-slate-300 leading-relaxed text-sm">
+                  <p className="text-slate-700 leading-relaxed text-sm">
                     {projectIdea}
                   </p>
                   {hints.length > 0 && (
                     <div className="mt-4 space-y-2">
                        {hints.map((h, i) => (
-                         <div key={i} className="bg-purple-500/10 border border-purple-500/20 p-2 rounded-lg text-[11px] text-purple-300 italic">
+                         <div key={i} className="bg-tan/10 border border-tan/20 p-2 rounded-lg text-[11px] text-purple-300 italic">
                             💡 Hint {i+1}: {h}
                          </div>
                        ))}
@@ -348,7 +348,7 @@ export default function ValidationArena() {
               <button 
                 onClick={generateProject}
                 disabled={isGenerating}
-                className="w-full py-3 px-4 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-semibold transition disabled:opacity-50"
+                className="w-full py-3 px-4 bg-primary-green hover:bg-tan text-[#0d1408] rounded-lg font-semibold transition disabled:opacity-50"
               >
                 Generate Skill-Gap Challenge
               </button>
@@ -357,7 +357,7 @@ export default function ValidationArena() {
                 <button 
                   onClick={requestHint}
                   disabled={isGettingHint}
-                  className="w-full py-2 px-4 bg-slate-800 hover:bg-slate-700 text-purple-400 rounded-lg text-sm font-medium transition flex items-center justify-center gap-2 border border-slate-700"
+                  className="w-full py-2 px-4 bg-slate-800 hover:bg-slate-700 text-tan rounded-lg text-sm font-medium transition flex items-center justify-center gap-2 border border-slate-700"
                 >
                   <Activity className="w-4 h-4" />
                   {isGettingHint ? "Consulting Documentation..." : "Request Technical Hint"}
@@ -366,28 +366,28 @@ export default function ValidationArena() {
             </div>
           </section>
 
-          <section className={`bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4 transition-opacity ${!isLockedIn ? 'opacity-50' : ''}`}>
-             <h2 className="text-xl font-semibold flex items-center gap-2 text-cyan-400">
+          <section className={`bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col gap-4 transition-opacity ${!isLockedIn ? 'opacity-50' : ''}`}>
+             <h2 className="text-xl font-semibold flex items-center gap-2 text-sage">
                 <Fingerprint className="w-5 h-5" /> Behavioral Monitor
              </h2>
              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-slate-950/50 border border-slate-800 p-4 rounded-xl">
+                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl">
                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Activity</p>
                    <p className={`text-sm font-mono ${isLockedIn && Date.now() - lastTyped < 5000 ? 'text-emerald-400' : 'text-slate-500'}`}>
                       {!isLockedIn ? "Paused" : (Date.now() - lastTyped < 5000 ? "Active" : "Idle")}
                    </p>
                 </div>
-                <div className="bg-slate-950/50 border border-slate-800 p-4 rounded-xl">
+                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl">
                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Deletion Ratio</p>
                    <p className="text-sm font-mono text-cyan-300">
                       {!isLockedIn ? "--" : (keystrokeCount > 0 ? ((backspaceCount / keystrokeCount) * 100).toFixed(0) + "%" : "0%")}
                    </p>
                 </div>
-                <div className="bg-slate-950/50 border border-slate-800 p-4 rounded-xl col-span-2">
+                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl col-span-2">
                    <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Neural Flow Status</p>
                    <div className="flex items-center gap-2 mt-2">
-                      <div className={`w-2 h-2 rounded-full ${!isLockedIn ? 'bg-slate-700' : (systemWarning ? 'bg-red-500 animate-ping' : 'bg-cyan-500 animate-pulse')}`} />
-                      <span className="text-xs text-slate-400 font-mono">
+                      <div className={`w-2 h-2 rounded-full ${!isLockedIn ? 'bg-slate-700' : (systemWarning ? 'bg-red-500 animate-ping' : 'bg-primary-green animate-pulse')}`} />
+                      <span className="text-xs text-primary-green/60 font-mono">
                          {!isLockedIn ? "Neural Lock Required" : (systemWarning ? "Authorship Flagged" : "Monitoring Signature...")}
                       </span>
                    </div>
@@ -395,7 +395,7 @@ export default function ValidationArena() {
              </div>
           </section>
 
-          <section className="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col min-h-[650px] md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 relative">
+          <section className="bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col min-h-[650px] md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 relative">
             <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-emerald-400">
               <Code className="w-5 h-5" /> Code & Validate
             </h2>
@@ -406,7 +406,7 @@ export default function ValidationArena() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="absolute top-16 left-6 right-6 z-50 bg-red-500 text-white p-3 rounded-lg text-xs font-bold shadow-2xl flex items-center gap-2 border border-white/20"
+                  className="absolute top-16 left-6 right-6 z-50 bg-red-500 text-[#0d1408] p-3 rounded-lg text-xs font-bold shadow-2xl flex items-center gap-2 border border-white/20"
                 >
                    <AlertCircle className="w-4 h-4" />
                    {systemWarning}
@@ -414,14 +414,14 @@ export default function ValidationArena() {
               )}
             </AnimatePresence>
             
-            <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-slate-800">
-              <div className="bg-slate-950 px-4 py-2 border-b border-slate-800 flex items-center justify-between">
+            <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-primary-green/20">
+              <div className="bg-primary-green/5 px-4 py-2 border-b border-primary-green/20 flex items-center justify-between">
                  <div className="flex items-center gap-2">
                     <Terminal className="w-4 h-4 text-slate-500" />
                     <span className="text-xs text-slate-500 font-mono">solution.tsx</span>
                  </div>
                  {timeLeft !== null && (
-                    <div className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${timeLeft < 60 ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-cyan-500/10 text-cyan-400'}`}>
+                    <div className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${timeLeft < 60 ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-primary-green/10 text-sage'}`}>
                        Time Remaining: {formatTime(timeLeft)}
                     </div>
                  )}
@@ -432,14 +432,14 @@ export default function ValidationArena() {
                 onKeyDown={handleKeyDown}
                 onPaste={handlePaste}
                 placeholder="// Write your elite solution here..."
-                className="flex-1 bg-slate-950 text-slate-300 p-4 font-mono text-sm resize-none focus:outline-none focus:ring-1 focus:ring-cyan-500/50"
+                className="flex-1 bg-primary-green/5 text-slate-700 p-4 font-mono text-sm resize-none focus:outline-none focus:ring-1 focus:ring-primary-green/50"
               />
             </div>
 
             <button 
               onClick={validateCode}
               disabled={isValidating || !code || !projectIdea}
-              className="mt-6 w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg font-semibold transition disabled:opacity-50 flex justify-center gap-2"
+              className="mt-6 w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-[#0d1408] rounded-lg font-semibold transition disabled:opacity-50 flex justify-center gap-2"
             >
               <CheckCircle2 className="w-5 h-5" /> 
               {isValidating ? "Evaluating Code..." : "Submit to Validation Engine"}
@@ -447,7 +447,7 @@ export default function ValidationArena() {
 
             {feedback && (
               <div className="mt-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
-                <p className="text-sm text-slate-300 leading-relaxed break-words">{feedback}</p>
+                <p className="text-sm text-slate-700 leading-relaxed break-words">{feedback}</p>
               </div>
             )}
           </section>

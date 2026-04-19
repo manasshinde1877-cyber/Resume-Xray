@@ -40,8 +40,8 @@ export function FloatingSpheres() {
     const initSpheres = () => {
       spheres = [];
       for (let i = 0; i < COUNT; i++) {
-        const isCyan = i % 2 === 0;
-        const color = isCyan ? "rgba(6, 182, 212, 0.04)" : "rgba(139, 92, 246, 0.04)";
+        const isSage = i % 2 === 0;
+        const color = isSage ? "rgba(153, 173, 122, 0.04)" : "rgba(220, 204, 172, 0.04)";
         spheres.push({
           x: Math.random() * W,
           y: Math.random() * H,

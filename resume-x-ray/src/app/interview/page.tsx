@@ -353,11 +353,11 @@ export default function InterviewPage() {
           className="mt-4 mb-2 flex flex-col md:flex-row md:items-center justify-between gap-4"
         >
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/8 border border-cyan-500/15 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-3">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> Live Session
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-green/8 border border-primary-green/15 text-sage text-[10px] font-bold uppercase tracking-widest mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-sage animate-pulse" /> Live Session
             </div>
-            <h1 className="text-3xl font-black text-white tracking-tight">Agentic Interview</h1>
-            <p className="text-slate-400 mt-1 text-sm">Real-time voice &amp; text verification module.</p>
+            <h1 className="text-3xl font-black text-[#0d1408] tracking-tight">Agentic Interview</h1>
+            <p className="text-primary-green/60 mt-1 text-sm">Real-time voice &amp; text verification module.</p>
           </div>
 
           <motion.button
@@ -366,8 +366,8 @@ export default function InterviewPage() {
             onClick={() => setIsLockedIn(!isLockedIn)}
             className={`px-5 py-2.5 rounded-xl border-2 transition-all flex items-center gap-2.5 font-bold uppercase tracking-widest text-xs ${
               isLockedIn
-                ? 'bg-cyan-500/15 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
-                : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-400'
+                ? 'bg-primary-green/15 border-primary-green text-sage shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                : 'bg-white/80 border-primary-green/20 text-slate-500 hover:border-slate-700 hover:text-primary-green/60'
             }`}
           >
             <Shield className={`w-4 h-4 ${isLockedIn ? 'animate-pulse' : ''}`} />
@@ -381,7 +381,7 @@ export default function InterviewPage() {
             <motion.div
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`w-48 h-12 rounded-full overflow-hidden border-2 bg-slate-900/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-3 ${proctorStatus === 'active' ? 'border-cyan-500/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
+              className={`w-48 h-12 rounded-full overflow-hidden border-2 bg-white/80/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-3 ${proctorStatus === 'active' ? 'border-primary-green/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
             >
               <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
                 <video ref={videoRef} className="w-full h-full object-cover grayscale opacity-70" muted playsInline />
@@ -390,10 +390,10 @@ export default function InterviewPage() {
 
               <div className="flex flex-col flex-1 overflow-hidden">
                 <div className="flex items-center justify-between">
-                  <span className="text-[8px] font-bold font-mono text-cyan-400 uppercase tracking-widest">Neural Proctor</span>
+                  <span className="text-[8px] font-bold font-mono text-sage uppercase tracking-widest">Neural Proctor</span>
                   <div className={`w-1.5 h-1.5 rounded-full ${proctorStatus === 'active' ? 'bg-emerald-500 animate-pulse' : 'bg-red-500 animate-ping'}`} />
                 </div>
-                <p className="text-[7px] text-slate-400 font-mono truncate">
+                <p className="text-[7px] text-primary-green/60 font-mono truncate">
                   {proctorWarning ? `⚠️ ${proctorWarning}` : "Presence Verified"}
                 </p>
               </div>
@@ -405,7 +405,7 @@ export default function InterviewPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="flex-1 glass-card rounded-2xl flex flex-col overflow-hidden relative shadow-2xl shadow-cyan-500/5"
+          className="flex-1 glass-card rounded-2xl flex flex-col overflow-hidden relative shadow-2xl shadow-primary-green/5"
         >
           {/* Chat History */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
@@ -417,20 +417,20 @@ export default function InterviewPage() {
                 className={`flex gap-4 ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {m.role === 'assistant' && (
-                  <div className="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 border border-cyan-500/10">
+                  <div className="w-10 h-10 rounded-full bg-primary-green/20 text-sage flex items-center justify-center shrink-0 border border-primary-green/10">
                     <Bot className="w-6 h-6" />
                   </div>
                 )}
 
                 <div className={`max-w-[75%] p-4 rounded-2xl pii-sensitive ${m.role === 'user'
-                    ? 'bg-cyan-600 text-white rounded-tr-sm shadow-lg shadow-cyan-900/20'
-                    : 'bg-slate-800/50 border border-slate-700/50 text-slate-200 rounded-tl-sm'
+                    ? 'bg-cyan-600 text-[#0d1408] rounded-tr-sm shadow-lg shadow-cyan-900/20'
+                    : 'bg-slate-800/50 border border-slate-700/50 text-slate-800 rounded-tl-sm'
                   }`}>
                   <p className="leading-relaxed text-sm md:text-base">{m.content}</p>
                 </div>
 
                 {m.role === 'user' && (
-                  <div className="w-10 h-10 rounded-full bg-slate-800 text-slate-400 border border-slate-700 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-full bg-slate-800 text-primary-green/60 border border-slate-700 flex items-center justify-center shrink-0">
                     <User className="w-6 h-6" />
                   </div>
                 )}
@@ -438,10 +438,10 @@ export default function InterviewPage() {
             ))}
             {isProcessing && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4 justify-start">
-                <div className="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-full bg-primary-green/20 text-sage flex items-center justify-center shrink-0">
                   <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
-                <div className="max-w-[70%] p-4 rounded-2xl bg-cyan-950/20 border border-cyan-500/10 text-slate-400 rounded-tl-sm flex items-center italic text-sm">
+                <div className="max-w-[70%] p-4 rounded-2xl bg-cyan-950/20 border border-primary-green/10 text-primary-green/60 rounded-tl-sm flex items-center italic text-sm">
                   Skeptical Staff Engineer is processing...
                 </div>
               </motion.div>
@@ -450,14 +450,14 @@ export default function InterviewPage() {
           </div>
 
           {/* Controller */}
-          <div className="p-6 bg-slate-950/90 backdrop-blur-xl border-t border-slate-800 flex flex-col gap-6">
+          <div className="p-6 bg-primary-green/5/90 backdrop-blur-xl border-t border-primary-green/20 flex flex-col gap-6">
             <AnimatePresence>
               {isRecording && interimText && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="text-cyan-400 text-sm italic text-center w-full bg-cyan-500/5 py-2 rounded-lg border border-cyan-500/10"
+                  className="text-sage text-sm italic text-center w-full bg-primary-green/5 py-2 rounded-lg border border-primary-green/10"
                 >
                   "{interimText}..."
                 </motion.div>
@@ -494,32 +494,32 @@ export default function InterviewPage() {
                       : `0 0 0px rgba(6, 182, 212, 0)`
                   }}
                   className={`relative z-10 w-14 h-14 rounded-full flex items-center justify-center transition-all shrink-0 ${isRecording
-                      ? 'bg-slate-900 border-2 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]'
-                      : 'bg-slate-800 text-slate-400 hover:text-cyan-400 border border-slate-700 hover:border-cyan-500/50 shadow-lg'
+                      ? 'bg-white/80 border-2 border-primary-green text-sage shadow-[0_0_20px_rgba(6,182,212,0.3)]'
+                      : 'bg-slate-800 text-primary-green/60 hover:text-sage border border-slate-700 hover:border-primary-green/50 shadow-lg'
                     } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
                   title={isRecording ? "Stop Recording" : "Start Recording"}
                 >
-                  {isRecording ? <div className="w-4 h-4 rounded-sm bg-cyan-400 animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> : <Mic className="w-6 h-6" />}
+                  {isRecording ? <div className="w-4 h-4 rounded-sm bg-sage animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> : <Mic className="w-6 h-6" />}
                 </motion.button>
               </div>
 
               {/* Text Entry */}
               <form
                 onSubmit={handleTextSubmit}
-                className="flex-1 flex items-center gap-3 bg-slate-900/50 border border-slate-800 rounded-2xl px-4 py-2 focus-within:border-cyan-500/50 transition-all shadow-inner"
+                className="flex-1 flex items-center gap-3 bg-white/80/50 border border-primary-green/20 rounded-2xl px-4 py-2 focus-within:border-primary-green/50 transition-all shadow-inner"
               >
                 <input
                   type="text"
                   value={textInput}
                   onChange={(e) => setTextInput(e.target.value)}
                   placeholder="Type your response here..."
-                  className="flex-1 bg-transparent border-none outline-none text-slate-200 placeholder:text-slate-600 py-2"
+                  className="flex-1 bg-transparent border-none outline-none text-slate-800 placeholder:text-slate-600 py-2"
                   disabled={isProcessing || isRecording}
                 />
                 <button
                   type="submit"
                   disabled={!textInput.trim() || isProcessing || isRecording}
-                  className="p-2 rounded-xl bg-cyan-600 text-white disabled:opacity-0 disabled:scale-90 transition-all hover:bg-cyan-500 active:scale-95"
+                  className="p-2 rounded-xl bg-cyan-600 text-[#0d1408] disabled:opacity-0 disabled:scale-90 transition-all hover:bg-primary-green active:scale-95"
                 >
                   <Volume2 className="w-5 h-5 rotate-90" /> {/* Using Volume2 as a stylized send icon */}
                 </button>
