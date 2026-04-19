@@ -62,21 +62,21 @@ export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className={`flex-1 border-2 border-dashed rounded-xl flex flex-col items-center justify-center p-6 cursor-pointer transition-colors ${
+              className={`flex-1 border-2 border-dashed rounded-2xl flex flex-col items-center justify-center p-6 cursor-pointer transition-all ${
                 isDragActive
-                  ? "border-sage bg-primary-green/10 scale-[1.02]"
-                  : "border-primary-green/30 bg-primary-green/5 hover:bg-primary-green/10 hover:border-sage/50"
+                  ? "border-black bg-white/30"
+                  : "border-black bg-white/20 hover:bg-white/30 hover:border-black/60"
               }`}
             >
               <input {...getInputProps()} />
-              <div className="w-16 h-16 rounded-full bg-primary-green/10 flex items-center justify-center mb-4 text-sage">
+              <div className="w-16 h-16 rounded-full bg-[#0d1408]/5 flex items-center justify-center mb-4 text-[#0d1408]/30">
                 <UploadCloud className="w-8 h-8" />
               </div>
-              <p className="text-center text-slate-700 font-medium mb-1">
-                {isDragActive ? "Drop resume here..." : "Drag & Drop Resume"}
+              <p className="text-center text-[#0d1408]/50 font-bold uppercase tracking-widest text-xs mb-2">
+                {isDragActive ? "Release to Scan" : "Click or Drop Resume"}
               </p>
-              <p className="text-center text-slate-500 text-sm">
-                Supports JPG, PNG (Max 5MB)
+              <p className="text-center text-[#0d1408]/30 text-[10px] font-medium uppercase tracking-tighter">
+                HEURISTIC EXTRACTION: JPG, PNG
               </p>
             </motion.div>
           </div>
@@ -85,36 +85,38 @@ export function IngestionCanvas({ onAnalyze }: IngestionCanvasProps) {
             key="filepreview"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex-1 bg-slate-950/50 border border-slate-700/50 rounded-xl p-6 flex flex-col items-center justify-center relative"
+            className="flex-1 bg-white/20 border border-black rounded-2xl p-6 flex flex-col items-center justify-center relative"
           >
             <button
               onClick={removeFile}
-              className="absolute top-4 right-4 p-1 rounded-md bg-slate-800 text-slate-400 hover:text-red-400 hover:bg-slate-700 transition"
+              className="absolute top-4 right-4 p-1 rounded-md bg-[#0d1408]/5 text-[#0d1408]/30 hover:text-red-600 hover:bg-white/50 transition"
             >
               <X className="w-5 h-5" />
             </button>
-            <div className="w-16 h-16 rounded-2xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-4">
+            <div className="w-16 h-16 rounded-2xl bg-[#0d1408]/5 text-[#0d1408]/40 flex items-center justify-center mb-4">
               <FileIcon className="w-8 h-8" />
             </div>
-            <p className="font-medium text-slate-200 mb-1 max-w-[200px] truncate">
+            <p className="font-bold text-[#0d1408] mb-1 max-w-[200px] truncate uppercase tracking-tighter text-sm">
               {file.name}
             </p>
-            <p className="text-sm text-slate-500 mb-6">
-              {(file.size / 1024 / 1024).toFixed(2)} MB
+            <p className="text-[10px] font-black text-[#0d1408]/30 mb-6 uppercase">
+              {(file.size / 1024 / 1024).toFixed(2)} MB • READY
             </p>
-
+ 
             <button
               onClick={handleAnalyze}
               disabled={isProcessing}
-              className="w-full py-3 px-4 bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg font-semibold transition flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full py-4 px-4 bg-[#0d1408] hover:bg-[#1a260f] text-[#99AD7A] rounded-xl font-bold uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed shadow-lg shadow-black/10"
             >
               {isProcessing ? (
                 <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Extracting...
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Analyzing...
                 </>
               ) : (
-                "Run X-Ray Analysis"
+                <>
+                  <Zap className="w-4 h-4" /> Run X-Ray Analysis
+                </>
               )}
             </button>
           </motion.div>
