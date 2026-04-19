@@ -14,6 +14,7 @@ export default function ValidationArena() {
   const [hints, setHints] = useState<string[]>([]);
   const [isGettingHint, setIsGettingHint] = useState(false);
   const [isLockedIn, setIsLockedIn] = useState(false);
+  const mountedRef = useRef(false);
 
   const requestHint = async () => {
     if (!projectIdea || isGettingHint) return;
@@ -89,11 +90,23 @@ export default function ValidationArena() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const proctorIntervalRef = useRef<any>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   // Load face-api models on mount
   useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isLockedIn) {
       if (proctorIntervalRef.current) clearInterval(proctorIntervalRef.current);
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
       return;
     }
     let faceapi: any;
@@ -109,6 +122,10 @@ export default function ValidationArena() {
     loadModels();
     return () => {
       if (proctorIntervalRef.current) clearInterval(proctorIntervalRef.current);
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLockedIn]);
@@ -116,9 +133,16 @@ export default function ValidationArena() {
   const startProctoring = async (faceapi: any) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { width: 320, height: 240 } });
+      if (!mountedRef.current || !isLockedIn) {
+        stream.getTracks().forEach(track => track.stop());
+        return;
+      }
+      streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        videoRef.current.play();
+        videoRef.current.play().catch(err => {
+          if (err.name !== "AbortError") console.error("Video play failed", err);
+        });
       }
 
       proctorIntervalRef.current = setInterval(async () => {
@@ -126,6 +150,7 @@ export default function ValidationArena() {
         
         const detections = await faceapi.detectSingleFace(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks();
         
+        if (!canvasRef.current) return;
         const ctx = canvasRef.current.getContext('2d');
         if (ctx) {
            ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);

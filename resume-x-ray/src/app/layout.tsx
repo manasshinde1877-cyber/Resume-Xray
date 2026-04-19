@@ -4,6 +4,7 @@ import "./globals.css";
 import { BlindModeProvider } from "@/context/BlindModeContext";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { MouseReactiveGrid } from "@/components/MouseReactiveGrid";
+import { FloatingSpheres } from "@/components/FloatingSpheres";
 import { Navigation } from "@/components/Navigation";
 
 const geistSans = Geist({
@@ -29,12 +30,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-50 selection:bg-cyan-500/30 overflow-x-hidden">
+      <body className="flex flex-col bg-slate-950 text-slate-50 selection:bg-cyan-500/30 overflow-x-hidden">
         <BlindModeProvider>
           <SmoothScrollProvider>
-            {/* Interactive canvas grid — beneath all content */}
+            {/* Interactive global backgrounds — beneath all content */}
+            <FloatingSpheres />
             <MouseReactiveGrid />
             {/* Ambient purple radial glow top-right */}
             <div

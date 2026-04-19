@@ -47,6 +47,7 @@ export default function InterviewPage() {
   const [useLocalSTT, setUseLocalSTT] = useState(true);
   const [interimText, setInterimText] = useState("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const mountedRef = useRef(false);
 
   // Proctoring States
   const [isLockedIn, setIsLockedIn] = useState(false);
@@ -55,14 +56,22 @@ export default function InterviewPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const proctorIntervalRef = useRef<any>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
   // Load face-api models on mount
   useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isLockedIn) {
-      if (proctorIntervalRef.current) {
-        clearInterval(proctorIntervalRef.current);
-        const stream = videoRef.current?.srcObject as MediaStream;
-        stream?.getTracks().forEach(track => track.stop());
+      if (proctorIntervalRef.current) clearInterval(proctorIntervalRef.current);
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
       }
       return;
     }
@@ -79,8 +88,10 @@ export default function InterviewPage() {
     loadModels();
     return () => {
       if (proctorIntervalRef.current) clearInterval(proctorIntervalRef.current);
-      const stream = videoRef.current?.srcObject as MediaStream;
-      stream?.getTracks().forEach(track => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLockedIn]);
@@ -88,9 +99,16 @@ export default function InterviewPage() {
   const startProctoring = async (faceapi: any) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      if (!mountedRef.current || !isLockedIn) {
+        stream.getTracks().forEach(track => track.stop());
+        return;
+      }
+      streamRef.current = stream;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        videoRef.current.play().catch(err => {
+          if (err.name !== "AbortError") console.error("Video play failed", err);
+        });
       }
 
       proctorIntervalRef.current = setInterval(async () => {

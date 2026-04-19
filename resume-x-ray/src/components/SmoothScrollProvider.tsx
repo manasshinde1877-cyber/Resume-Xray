@@ -16,6 +16,12 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     });
 
     lenisRef.current = lenis;
+    
+    // Sync Lenis height with dynamic content
+    const resizeObserver = new ResizeObserver(() => {
+      lenis.resize();
+    });
+    resizeObserver.observe(document.body);
 
     let rafId: number;
     function raf(time: number) {
@@ -25,6 +31,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     rafId = requestAnimationFrame(raf);
 
     return () => {
+      resizeObserver.disconnect();
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };

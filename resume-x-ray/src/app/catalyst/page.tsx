@@ -140,8 +140,8 @@ export default function ContributionCatalyst() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-cyan-500/30">
-      <main className="pt-24 px-6 max-w-7xl mx-auto pb-20 overflow-hidden">
+    <div className="min-h-screen text-slate-200 selection:bg-cyan-500/30">
+      <main className="pt-24 px-6 max-w-7xl mx-auto pb-20">
         <div className="relative mb-12 text-center">
             <motion.div 
                initial={{ opacity: 0, scale: 0.8 }}
@@ -343,7 +343,7 @@ export default function ContributionCatalyst() {
            </section>
 
            <section className="lg:col-span-2 space-y-6">
-              <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-8 backdrop-blur-xl min-h-[600px] flex flex-col">
+              <div className="bg-slate-900/50 border border-slate-800 rounded-3xl p-8 backdrop-blur-xl min-h-[900px] flex flex-col">
                  <div className="flex items-center justify-between mb-8">
                     <h2 className="text-2xl font-bold flex items-center gap-2 text-white">
                        <Target className="w-6 h-6 text-purple-400" /> Open Opportunities

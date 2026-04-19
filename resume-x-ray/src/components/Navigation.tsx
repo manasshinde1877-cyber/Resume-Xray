@@ -7,9 +7,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const navLinks = [
-  { href: "/", label: "Dashboard" },
+  { href: "/", label: "ATS parsing vs Human Recruiter" },
   { href: "/interview", label: "Agentic Interview" },
-  { href: "/validation", label: "Analysis Loop" },
+  { href: "/validation", label: "Validation arena" },
 ];
 
 export function Navigation() {
