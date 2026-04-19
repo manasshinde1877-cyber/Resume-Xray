@@ -20,7 +20,7 @@ export default function App() {
       {/* Floating tilted images */}
       <div className="absolute top-[10%] left-[15%] w-96 h-[32rem] floating-1 z-10">
         <ImageWithFallback
-          src={cvImg1}
+          src={cvImg1.src}
           alt="Attractive CV Design"
           className="w-full h-full object-cover rounded-2xl shadow-2xl transform -rotate-12 hover:rotate-0 transition-transform duration-500"
         />
@@ -28,7 +28,7 @@ export default function App() {
 
       <div className="absolute top-[18%] right-[15%] w-96 h-[32rem] floating-2 z-10">
         <ImageWithFallback
-          src={cvImg2}
+          src={cvImg2.src}
           alt="Modern CV Template Package"
           className="w-full h-full object-cover rounded-2xl shadow-2xl transform rotate-12 hover:rotate-0 transition-transform duration-500"
         />
