@@ -121,7 +121,7 @@ export default function Dashboard() {
         </AnimatePresence>
 
         {/* ── Main Grid ── */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 flex-1">
 
           {/* ── Left Sidebar ── */}
           <motion.div {...fadeLeft(0.15)} className="lg:col-span-1 flex flex-col gap-5">
@@ -249,7 +249,7 @@ export default function Dashboard() {
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
-            className="lg:col-span-2 flex flex-col gap-5 z-10"
+            className="md:col-span-2 lg:col-span-2 flex flex-col gap-5 z-10"
           >
             <section className="glass-card rounded-2xl p-6 flex-1 flex flex-col min-h-[600px]">
               <div className="flex items-center justify-between mb-6">

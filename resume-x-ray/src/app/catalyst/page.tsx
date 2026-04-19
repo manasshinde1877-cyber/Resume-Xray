@@ -142,24 +142,24 @@ export default function ContributionCatalyst() {
   return (
     <div className="min-h-screen text-slate-800 selection:bg-primary-green/30">
       <main className="pt-24 px-6 max-w-7xl mx-auto pb-20">
-        <div className="relative mb-12 text-center">
+        <div className="relative mb-8 md:mb-12 text-center px-4">
             <motion.div 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
-               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-green/10 border border-primary-green/20 text-sage text-xs font-bold uppercase tracking-widest mb-6"
+               className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary-green/10 border border-primary-green/20 text-sage text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6"
             >
-               <Flame className="w-4 h-4" /> Activating Contribution Catalyst
+               <Flame className="w-3 md:w-4 h-3 md:h-4" /> Activating Contribution Catalyst
             </motion.div>
-            <h1 className="text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-sage to-tan bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-sage to-tan bg-clip-text text-transparent">
               FUEL YOUR RESUME
             </h1>
-            <p className="text-primary-green/60 text-lg max-w-2xl mx-auto">
+            <p className="text-primary-green/60 text-sm md:text-lg max-w-2xl mx-auto">
                Bridge your skill gaps by solving real-world open problems. We scan your GitHub footprint and find the perfect "Next Step" for your career.
             </p>
 
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-10 blur-sm">
-               <div className="grid grid-cols-10 gap-2">
-                  {Array.from({ length: 50 }).map((_, i) => (
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10 opacity-5 md:opacity-10 blur-sm overflow-hidden w-full">
+               <div className="grid grid-cols-5 md:grid-cols-10 gap-1 md:gap-2">
+                  {Array.from({ length: 40 }).map((_, i) => (
                     <motion.div 
                       key={i}
                       initial={{ opacity: 0.1 }}
@@ -167,14 +167,14 @@ export default function ContributionCatalyst() {
                         opacity: activeStage === "matched" && i % 3 === 0 ? 0.8 : 0.1,
                         backgroundColor: activeStage === "matched" && i % 3 === 0 ? "#06b6d4" : "transparent"
                       }}
-                      className="w-4 h-4 rounded-sm border border-primary-green/20"
+                      className="w-3 h-3 md:w-4 md:h-4 rounded-sm border border-primary-green/20"
                     />
                   ))}
                </div>
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
            <section className="lg:col-span-1 space-y-6">
               <div className="bg-white/80/50 border border-primary-green/20 rounded-3xl p-8 backdrop-blur-xl relative overflow-hidden group">
                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
