@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Navigation } from "@/components/Navigation";
 import { Mic, Square, Loader2, Volume2, User, Bot, Shield, Activity } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -80,6 +79,8 @@ export default function InterviewPage() {
     loadModels();
     return () => {
       if (proctorIntervalRef.current) clearInterval(proctorIntervalRef.current);
+      const stream = videoRef.current?.srcObject as MediaStream;
+      stream?.getTracks().forEach(track => track.stop());
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLockedIn]);
@@ -158,7 +159,7 @@ export default function InterviewPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Tab Visibility Auto-Mute
+  // Tab Visibility & Unmount Silencing
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
@@ -166,7 +167,18 @@ export default function InterviewPage() {
       }
     };
     document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+    
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      // HARD SILENCE on page transition/unmount
+      window.speechSynthesis.cancel();
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
   }, []);
 
   const speakText = (text: string) => {
@@ -310,27 +322,40 @@ export default function InterviewPage() {
 
   return (
     <>
-      <Navigation />
-      <main className="pt-20 px-6 min-h-screen pb-12 flex flex-col gap-6 max-w-5xl mx-auto w-full">
-        <header className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <motion.main
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] as any }}
+        className="pt-20 px-6 min-h-screen pb-12 flex flex-col gap-6 max-w-5xl mx-auto w-full relative z-10"
+      >
+        <motion.header
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+          className="mt-4 mb-2 flex flex-col md:flex-row md:items-center justify-between gap-4"
+        >
           <div>
-            <h1 className="text-3xl font-bold text-cyan-400">Agentic Interview</h1>
-            <p className="text-slate-400 mt-2">Real-time voice & text verification module.</p>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/8 border border-cyan-500/15 text-cyan-400 text-[10px] font-bold uppercase tracking-widest mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" /> Live Session
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">Agentic Interview</h1>
+            <p className="text-slate-400 mt-1 text-sm">Real-time voice &amp; text verification module.</p>
           </div>
 
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => setIsLockedIn(!isLockedIn)}
-            className={`px-6 py-3 rounded-xl border-2 transition-all flex items-center gap-3 font-bold uppercase tracking-widest text-xs ${isLockedIn
-                ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]'
-                : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700'
-              }`}
+            className={`px-5 py-2.5 rounded-xl border-2 transition-all flex items-center gap-2.5 font-bold uppercase tracking-widest text-xs ${
+              isLockedIn
+                ? 'bg-cyan-500/15 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                : 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-400'
+            }`}
           >
             <Shield className={`w-4 h-4 ${isLockedIn ? 'animate-pulse' : ''}`} />
             {isLockedIn ? "Neural Lock: ENABLED (click to disable)" : "Neural Lock: DISABLED (click to enable)"}
           </motion.button>
-        </header>
+        </motion.header>
 
         {/* Proctoring Monitor - Fixed to Top Center */}
         {isLockedIn && (
@@ -358,7 +383,12 @@ export default function InterviewPage() {
           </div>
         )}
 
-        <div className="flex-1 bg-slate-900 border border-slate-800 rounded-2xl flex flex-col overflow-hidden relative shadow-2xl shadow-cyan-500/5">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.5 }}
+          className="flex-1 glass-card rounded-2xl flex flex-col overflow-hidden relative shadow-2xl shadow-cyan-500/5"
+        >
           {/* Chat History */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
             {messages.map((m, i) => (
@@ -484,8 +514,8 @@ export default function InterviewPage() {
               </p>
             </div>
           </div>
-        </div>
-      </main>
+        </motion.div>
+      </motion.main>
     </>
   );
 }

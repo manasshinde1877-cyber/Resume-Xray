@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Navigation } from "@/components/Navigation";
 import { Terminal, Rocket, Flame, Target, MessageSquare, ChevronRight, Search, Activity, Sparkles, LayoutGrid } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -142,8 +141,6 @@ export default function ContributionCatalyst() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-cyan-500/30">
-      <Navigation />
-
       <main className="pt-24 px-6 max-w-7xl mx-auto pb-20 overflow-hidden">
         <div className="relative mb-12 text-center">
             <motion.div 

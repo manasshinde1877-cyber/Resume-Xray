@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           ],
         },
       ],
-      model: "meta-llama/llama-4-scout-17b-16e-instruct",
+      model: "llama-3.2-11b-vision-preview",
     });
 
     const transcribedText = completion.choices[0]?.message?.content || "";

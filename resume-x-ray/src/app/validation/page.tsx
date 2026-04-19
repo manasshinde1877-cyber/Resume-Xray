@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Navigation } from "@/components/Navigation";
 import { Code, Terminal, Zap, CheckCircle2, Fingerprint, Activity, AlertCircle, Shield } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -242,7 +241,6 @@ export default function ValidationArena() {
 
   return (
     <>
-      <Navigation />
       <main className="pt-20 px-6 min-h-screen pb-12 flex flex-col gap-6 max-w-[1600px] mx-auto w-full">
         <header className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
