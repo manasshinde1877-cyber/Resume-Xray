@@ -128,10 +128,10 @@ export default function Dashboard() {
 
             {/* Ingestion Card */}
             <ScrollReveal direction="left" delay={100}>
-              <section className="glass-card rounded-2xl p-6 flex flex-col min-h-[220px]">
+              <section className="bg-[#99AD7A] rounded-3xl p-6 flex flex-col min-h-[220px] shadow-xl shadow-black/5">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="w-1 h-5 rounded-full bg-sage" />
-                  <h2 className="text-sm font-bold text-sage uppercase tracking-widest">Ingestion Canvas</h2>
+                  <span className="w-1 h-5 rounded-full bg-[#0d1408]" />
+                  <h2 className="text-sm font-bold text-[#0d1408] uppercase tracking-widest">Ingestion Canvas</h2>
                 </div>
                 <div className="flex-1 relative z-10">
                   <IngestionCanvas onAnalyze={processFile} />
@@ -141,18 +141,18 @@ export default function Dashboard() {
 
             {/* Recruiter Requirements */}
             <ScrollReveal direction="left" delay={180}>
-              <motion.section {...fadeUp(0.2)} className="glass-card rounded-2xl p-6 flex flex-col">
+              <motion.section {...fadeUp(0.2)} className="bg-[#99AD7A] rounded-3xl p-6 flex flex-col shadow-xl shadow-black/5">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="w-1 h-5 rounded-full bg-amber-400" />
-                  <h3 className="text-sm font-bold text-amber-400 uppercase tracking-widest">Recruiter Requirements</h3>
+                  <span className="w-1 h-5 rounded-full bg-[#0d1408]" />
+                  <h3 className="text-sm font-bold text-[#0d1408] uppercase tracking-widest">Recruiter Requirements</h3>
                 </div>
                 <textarea
                   value={recruiterRequirements}
                   onChange={(e) => setRecruiterRequirements(e.target.value)}
-                  placeholder="Ex: Needs 3+ years in Rust, must be based in London, expert in HFT..."
-                  className="w-full bg-primary-green/5/60 border border-primary-green/20 rounded-xl p-4 text-sm text-slate-700 focus:outline-none focus:ring-1 focus:ring-amber-500/40 focus:border-amber-500/30 min-h-[120px] resize-none transition-all placeholder:text-slate-600"
+                  placeholder="Ex: Needs 3+ years in Rust, must be London based..."
+                  className="w-full bg-white/20 border border-black rounded-xl p-4 text-sm text-[#0d1408] focus:outline-none focus:ring-1 focus:ring-[#0d1408]/20 focus:border-[#0d1408]/20 min-h-[120px] resize-none transition-all placeholder:text-[#0d1408]/30"
                 />
-                <p className="text-[10px] text-slate-600 mt-2 italic">
+                <p className="text-[10px] text-[#0d1408]/60 mt-2 italic">
                   Requirements weight the Recruiter Perspective analytics.
                 </p>
               </motion.section>
@@ -160,10 +160,10 @@ export default function Dashboard() {
 
             {/* Power Score */}
             <ScrollReveal direction="left" delay={260}>
-              <motion.section {...fadeUp(0.25)} className="glass-card rounded-2xl p-6 flex flex-col relative overflow-hidden flex-1">
+              <motion.section {...fadeUp(0.25)} className="bg-[#99AD7A] rounded-3xl p-6 flex flex-col relative overflow-hidden flex-1 shadow-xl shadow-black/5">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="w-1 h-5 rounded-full bg-emerald-400" />
-                  <h2 className="text-sm font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-1 h-5 rounded-full bg-[#0d1408]" />
+                  <h2 className="text-sm font-bold text-[#0d1408] uppercase tracking-widest flex items-center gap-2">
                     <Zap className="w-3.5 h-3.5" /> Power Score
                   </h2>
                 </div>
@@ -251,11 +251,11 @@ export default function Dashboard() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
             className="md:col-span-2 lg:col-span-2 flex flex-col gap-5 z-10"
           >
-            <section className="glass-card rounded-2xl p-6 flex-1 flex flex-col min-h-[600px]">
+            <section className="bg-[#99AD7A] rounded-3xl p-6 flex-1 flex flex-col min-h-[600px] shadow-xl shadow-black/5">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2">
-                  <span className="w-1 h-5 rounded-full bg-tan" />
-                  <h2 className="text-sm font-bold text-tan uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-1 h-5 rounded-full bg-[#0d1408]" />
+                  <h2 className="text-sm font-bold text-[#0d1408] uppercase tracking-widest flex items-center gap-2">
                     <LayoutGrid className="w-3.5 h-3.5" /> Dual-Perspective Analytics
                   </h2>
                 </div>
@@ -271,38 +271,22 @@ export default function Dashboard() {
                 )}
               </div>
 
-              <div className="flex-1 bg-primary-green/5/60 rounded-xl border border-primary-green/20/50 flex flex-col overflow-hidden shadow-inner shadow-black/50">
+              <div className="flex-1 bg-white/20 rounded-xl border border-black flex flex-col overflow-hidden shadow-inner shadow-[#0d1408]/5">
                 <AnimatePresence mode="wait">
                   {isProcessing ? (
                     <motion.div key="proc" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex-1 flex flex-col items-center justify-center gap-6 p-8">
                       <div className="w-full max-w-sm space-y-3">
-                        <div className="h-1 bg-slate-800 rounded-full overflow-hidden relative">
+                        <div className="h-1 bg-[#0d1408]/10 rounded-full overflow-hidden relative">
                           <motion.div
-                            className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-primary-green to-purple-500 rounded-full"
+                            className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[#0d1408]/40 to-[#0d1408]/10 rounded-full"
                             initial={{ left: "-100%", width: "50%" }}
                             animate={{ left: "200%" }}
                             transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
                           />
                         </div>
-                        <p className="text-slate-500 text-sm text-center animate-pulse">
-                          Running semantic extraction via Llama-4 Vision &amp; Analysis...
+                        <p className="text-[#0d1408]/40 text-[10px] font-bold uppercase tracking-widest text-center animate-pulse">
+                          Running semantic extraction via Neural Engine...
                         </p>
-                      </div>
-                      <div className="grid grid-cols-3 gap-3 w-full max-w-sm">
-                        {["OCR Parsing", "ATS Mapping", "Heuristics"].map((step, i) => (
-                          <motion.div
-                            key={step}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: i * 0.2 }}
-                            className="flex flex-col items-center gap-1 text-center"
-                          >
-                            <div className="w-8 h-8 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center">
-                              <div className="w-2 h-2 rounded-full bg-primary-green animate-pulse" style={{ animationDelay: `${i * 0.3}s` }} />
-                            </div>
-                            <span className="text-[9px] text-slate-600 font-bold uppercase tracking-wider">{step}</span>
-                          </motion.div>
-                        ))}
                       </div>
                     </motion.div>
                   ) : analysis ? (
@@ -312,10 +296,10 @@ export default function Dashboard() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 }}
-                          className="bg-gradient-to-r from-primary-green/5 to-transparent border-b border-primary-green/20/50 p-6"
+                          className="bg-white/30 border-b border-black p-6"
                         >
-                          <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">The Real Talk</h3>
-                          <p className="text-base text-slate-800 leading-relaxed font-medium italic">
+                          <h3 className="text-[10px] font-bold text-[#0d1408]/40 uppercase tracking-widest mb-2">The Real Talk</h3>
+                          <p className="text-base text-[#0d1408] leading-relaxed font-medium italic">
                             &ldquo;{analysis.plain_english_summary}&rdquo;
                           </p>
                         </motion.div>

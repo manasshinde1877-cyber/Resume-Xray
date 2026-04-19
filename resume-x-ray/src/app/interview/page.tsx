@@ -405,7 +405,7 @@ export default function InterviewPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.25, duration: 0.5 }}
-          className="flex-1 glass-card rounded-2xl flex flex-col overflow-hidden relative shadow-2xl shadow-primary-green/5"
+          className="flex-1 bg-[#99AD7A] rounded-3xl flex flex-col overflow-hidden relative shadow-2xl shadow-black/5"
         >
           {/* Chat History */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6 scrollbar-thin scrollbar-thumb-slate-800 scrollbar-track-transparent">
@@ -422,9 +422,9 @@ export default function InterviewPage() {
                   </div>
                 )}
 
-                <div className={`max-w-[75%] p-4 rounded-2xl pii-sensitive ${m.role === 'user'
-                    ? 'bg-cyan-600 text-[#0d1408] rounded-tr-sm shadow-lg shadow-cyan-900/20'
-                    : 'bg-slate-800/50 border border-slate-700/50 text-slate-800 rounded-tl-sm'
+                <div className={`max-w-[75%] p-4 rounded-2xl pii-sensitive border ${m.role === 'user'
+                    ? 'bg-[#0d1408] border-black text-[#99AD7A] rounded-tr-sm shadow-lg shadow-black/10'
+                    : 'bg-white/30 border-black text-[#0d1408] rounded-tl-sm'
                   }`}>
                   <p className="leading-relaxed text-sm md:text-base">{m.content}</p>
                 </div>
@@ -441,8 +441,8 @@ export default function InterviewPage() {
                 <div className="w-10 h-10 rounded-full bg-primary-green/20 text-sage flex items-center justify-center shrink-0">
                   <Loader2 className="w-5 h-5 animate-spin" />
                 </div>
-                <div className="max-w-[70%] p-4 rounded-2xl bg-cyan-950/20 border border-primary-green/10 text-primary-green/60 rounded-tl-sm flex items-center italic text-sm">
-                  Skeptical Staff Engineer is processing...
+                <div className="max-w-[70%] p-4 rounded-2xl bg-white/20 border border-black text-[#0d1408]/60 rounded-tl-sm flex items-center italic text-sm">
+                  Neural Engine is processing...
                 </div>
               </motion.div>
             )}
@@ -450,7 +450,7 @@ export default function InterviewPage() {
           </div>
 
           {/* Controller */}
-          <div className="p-6 bg-primary-green/5/90 backdrop-blur-xl border-t border-primary-green/20 flex flex-col gap-6">
+          <div className="p-6 bg-white/10 backdrop-blur-xl border-t border-black/10 flex flex-col gap-6">
             <AnimatePresence>
               {isRecording && interimText && (
                 <motion.div
@@ -476,7 +476,7 @@ export default function InterviewPage() {
                         scale: 1 + (volume / 50),
                         opacity: 0.3 + (volume / 100),
                         filter: `blur(${10 + (volume / 5)}px)`,
-                        background: `radial-gradient(circle, rgba(6,182,212,0.8) 0%, rgba(168,85,247,0.5) 50%, rgba(236,72,153,0) 100%)`
+                        background: `radial-gradient(circle, rgba(13,20,8,0.8) 0%, rgba(13,20,8,0.5) 50%, rgba(13,20,8,0) 100%)`
                       }}
                       exit={{ scale: 0, opacity: 0 }}
                       className="absolute inset-0 rounded-full z-0"
@@ -490,38 +490,38 @@ export default function InterviewPage() {
                   animate={{
                     scale: isRecording ? 1.05 : 1,
                     boxShadow: isRecording
-                      ? `0 0 ${20 + volume}px rgba(6, 182, 212, 0.4)`
-                      : `0 0 0px rgba(6, 182, 212, 0)`
+                      ? `0 0 ${20 + volume}px rgba(13, 20, 8, 0.2)`
+                      : `0 0 0px rgba(0, 0, 0, 0)`
                   }}
                   className={`relative z-10 w-14 h-14 rounded-full flex items-center justify-center transition-all shrink-0 ${isRecording
-                      ? 'bg-white/80 border-2 border-primary-green text-sage shadow-[0_0_20px_rgba(6,182,212,0.3)]'
-                      : 'bg-slate-800 text-primary-green/60 hover:text-sage border border-slate-700 hover:border-primary-green/50 shadow-lg'
+                      ? 'bg-[#0d1408] border-2 border-black text-[#99AD7A] shadow-xl'
+                      : 'bg-white/20 text-[#0d1408]/60 hover:text-[#0d1408] border border-black hover:bg-white/30 shadow-lg'
                     } ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
                   title={isRecording ? "Stop Recording" : "Start Recording"}
                 >
-                  {isRecording ? <div className="w-4 h-4 rounded-sm bg-sage animate-pulse shadow-[0_0_10px_rgba(6,182,212,0.8)]" /> : <Mic className="w-6 h-6" />}
+                  {isRecording ? <div className="w-4 h-4 rounded-sm bg-[#99AD7A] animate-pulse" /> : <Mic className="w-6 h-6" />}
                 </motion.button>
               </div>
 
               {/* Text Entry */}
               <form
                 onSubmit={handleTextSubmit}
-                className="flex-1 flex items-center gap-3 bg-white/80/50 border border-primary-green/20 rounded-2xl px-4 py-2 focus-within:border-primary-green/50 transition-all shadow-inner"
+                className="flex-1 flex items-center gap-3 bg-white/20 border border-black rounded-2xl px-4 py-2 focus-within:bg-white/30 transition-all shadow-inner"
               >
                 <input
                   type="text"
                   value={textInput}
                   onChange={(e) => setTextInput(e.target.value)}
                   placeholder="Type your response here..."
-                  className="flex-1 bg-transparent border-none outline-none text-slate-800 placeholder:text-slate-600 py-2"
+                  className="flex-1 bg-transparent border-none outline-none text-[#0d1408] placeholder:text-[#0d1408]/40 py-2"
                   disabled={isProcessing || isRecording}
                 />
                 <button
                   type="submit"
                   disabled={!textInput.trim() || isProcessing || isRecording}
-                  className="p-2 rounded-xl bg-cyan-600 text-[#0d1408] disabled:opacity-0 disabled:scale-90 transition-all hover:bg-primary-green active:scale-95"
+                  className="p-2 rounded-xl bg-[#0d1408] text-[#99AD7A] disabled:opacity-0 disabled:scale-90 transition-all hover:bg-[#1a260f] active:scale-95"
                 >
-                  <Volume2 className="w-5 h-5 rotate-90" /> {/* Using Volume2 as a stylized send icon */}
+                  <Volume2 className="w-5 h-5 rotate-90" />
                 </button>
               </form>
             </div>
