@@ -31,9 +31,14 @@ export default function ValidationArena() {
         })
       });
       const data = await res.json();
+      if (!data.reply) {
+        setSystemWarning("Hint failed: " + (data.error || "API Error"));
+        return;
+      }
       setHints(prev => [...prev, data.reply]);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setSystemWarning("Failed to connect to Neural Engine.");
     } finally {
       setIsGettingHint(false);
     }
@@ -226,19 +231,26 @@ export default function ValidationArena() {
       });
       const data = await res.json();
       
+      if (!data.reply) {
+        setSystemWarning(data.error || "Failed to generate challenge. Try again.");
+        return;
+      }
+
       // Attempt to parse JSON from AI response
       let parsed;
       try {
         const cleaned = data.reply.replace(/```json/g, '').replace(/```/g, '').trim();
         parsed = JSON.parse(cleaned);
+        if (!parsed.challenge) throw new Error("Missing challenge in JSON");
       } catch {
         parsed = { challenge: data.reply, time_minutes: 20 };
       }
 
       setProjectIdea(parsed.challenge);
       setTimeLeft(parsed.time_minutes * 60);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setSystemWarning("Neural Engine Offline or Rate Limited.");
     } finally {
       setIsGenerating(false);
     }
@@ -255,10 +267,15 @@ export default function ValidationArena() {
         })
       });
       const data = await res.json();
+      if (!data.reply) {
+        setSystemWarning(data.error || "Validation failed format.");
+        return;
+      }
       setFeedback(data.reply);
       setTimeLeft(null); // Stop timer on submission
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setSystemWarning("Failed to validate logic. Backend overloaded.");
     } finally {
       setIsValidating(false);
     }

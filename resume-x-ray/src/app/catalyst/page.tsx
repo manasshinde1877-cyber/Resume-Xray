@@ -92,8 +92,15 @@ export default function ContributionCatalyst() {
         })
       });
       const aiData = await res.json();
-      const enriched = JSON.parse(aiData.reply.replace(/```json/g, '').replace(/```/g, '').trim());
-
+      if (!aiData.reply) {
+        throw new Error(aiData.error || "Failed to get AI analysis.");
+      }
+      let enriched = [];
+      try {
+        enriched = JSON.parse(aiData.reply.replace(/```json/g, '').replace(/```/g, '').trim());
+      } catch (parseErr) {
+        throw new Error("Neural output was malformed. Try fetching again.");
+      }
       const finalIssues = rawIssues.map((ri: any) => {
         const info = enriched.find((e: any) => e.title === ri.title) || { category: "Skill Gap", rationale: "Recommended based on tech stack." };
         return { ...ri, ...info };
@@ -101,8 +108,10 @@ export default function ContributionCatalyst() {
       
       setMatchedIssues(finalIssues);
       setActiveStage("matched");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err.message || "Failed to find opportunities.");
+      setActiveStage("idle");
     } finally {
       setIsSyncing(false);
     }
@@ -130,10 +139,20 @@ export default function ContributionCatalyst() {
         })
       });
       const data = await res.json();
-      const parsed = JSON.parse(data.reply.replace(/```json/g, '').replace(/```/g, '').trim());
+      if (!data.reply) {
+        throw new Error(data.error || "Failed to generate pitch.");
+      }
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(data.reply.replace(/```json/g, '').replace(/```/g, '').trim());
+      } catch (parseErr) {
+        throw new Error("Neural pitch generator hallucinated format. Try again.");
+      }
       setGeneratedPitch(parsed);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      alert(err.message || "Generation failed.");
     } finally {
       setIsGeneratingPitch(false);
     }

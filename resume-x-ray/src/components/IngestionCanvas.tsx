@@ -2,7 +2,7 @@
 
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { UploadCloud, File as FileIcon, X, Loader2 } from "lucide-react";
+import { UploadCloud, File as FileIcon, X, Loader2, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface IngestionCanvasProps {

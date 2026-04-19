@@ -9,12 +9,9 @@ import {
   Loader2, RefreshCw
 } from "lucide-react";
 import { IngestionCanvas } from "@/components/IngestionCanvas";
-import { SplitPerspectiveCharts } from "@/components/SplitPerspectiveCharts";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { useAuth } from "@/context/AuthContext";
-import { uploadResumeAndSave, getUserResumes, ResumeAnalysis } from "@/lib/firebase/resumeServices";
-import { auth, db } from "@/lib/firebase/config";
-import { doc, deleteDoc } from "firebase/firestore";
+
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -35,48 +32,6 @@ export default function Dashboard() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [recruiterRequirements, setRecruiterRequirements] = useState("");
-  
-  // History States
-  const [history, setHistory] = useState<ResumeAnalysis[]>([]);
-  const [isHistoryLoading, setIsHistoryLoading] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
-
-  useEffect(() => {
-    if (user) {
-      fetchHistory();
-    }
-  }, [user]);
-
-  const fetchHistory = async () => {
-    if (!user) return;
-    try {
-      setIsHistoryLoading(true);
-      const data = await getUserResumes(user.uid);
-      setHistory(data);
-    } catch (err) {
-      console.error("Failed to fetch history:", err);
-    } finally {
-      setIsHistoryLoading(false);
-    }
-  };
-
-  const deleteHistoryItem = async (e: React.MouseEvent, id: string) => {
-    e.stopPropagation();
-    if (!confirm("Delete this analysis record?")) return;
-    try {
-      await deleteDoc(doc(db, "resumes", id));
-      setHistory(prev => prev.filter(item => item.id !== id));
-    } catch (err) {
-      console.error("Delete failed:", err);
-    }
-  };
-
-  const loadFromHistory = (item: ResumeAnalysis) => {
-    setAnalysis(item.analysis);
-    localStorage.setItem("current_resume_analysis", JSON.stringify(item.analysis));
-    setShowHistory(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
 
   const processFile = async (file: File): Promise<void> => {
     try {
@@ -121,15 +76,7 @@ export default function Dashboard() {
       setAnalysis(analyzeData.analysis);
       localStorage.setItem("current_resume_analysis", JSON.stringify(analyzeData.analysis));
 
-      // Persist to Firebase (only if logged in) — non-blocking, errors won't break UI
-      if (user) {
-        try {
-          await uploadResumeAndSave(user.uid, file, analyzeData.analysis);
-          fetchHistory();
-        } catch (fbErr) {
-          console.warn("Firebase save failed (non-critical):", fbErr);
-        }
-      }
+
     } catch (err: any) {
       console.error(err);
       setError(err.message || "An error occurred during analysis.");
@@ -158,122 +105,10 @@ export default function Dashboard() {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
-             <button 
-               onClick={() => setShowHistory(true)}
-               className="group relative px-6 py-3 rounded-2xl bg-white/80 border border-primary-green/20 text-primary-green font-bold text-xs uppercase tracking-widest hover:border-primary-green/40 hover:bg-primary-green/5 transition-all flex items-center gap-2.5 overflow-hidden"
-             >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-green/5 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
-                <History className="w-4 h-4 group-hover:rotate-[-45deg] transition-transform" />
-                Resume History
-                {history.length > 0 && (
-                  <span className="ml-1 px-1.5 py-0.5 rounded-md bg-primary-green text-cream text-[9px]">
-                    {history.length}
-                  </span>
-                )}
-             </button>
-          </div>
+
         </motion.header>
 
-        {/* ── History Drawer ── */}
-        <AnimatePresence>
-          {showHistory && (
-            <>
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setShowHistory(false)}
-                className="fixed inset-0 bg-primary-green/5/80 backdrop-blur-sm z-[200]"
-              />
-              <motion.aside
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white border-l border-primary-green/20 z-[201] shadow-2xl flex flex-col"
-              >
-                <div className="p-6 border-b border-primary-green/10 flex items-center justify-between bg-primary-green/5">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-primary-green/10 flex items-center justify-center text-sage">
-                      <History className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <h2 className="text-lg font-bold text-slate-800">Neural Archive</h2>
-                      <p className="text-[10px] uppercase font-bold text-primary-green/60 tracking-tighter">Historical Semantic Data</p>
-                    </div>
-                  </div>
-                  <button onClick={() => setShowHistory(false)} className="p-2 hover:bg-black/5 rounded-full transition-colors">
-                    <AlertCircle className="w-5 h-5 rotate-45 text-slate-400" />
-                  </button>
-                </div>
 
-                <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                  {isHistoryLoading ? (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-3">
-                      <RefreshCw className="w-6 h-6 animate-spin" />
-                      <span className="text-xs font-bold uppercase tracking-widest">Accessing Vault...</span>
-                    </div>
-                  ) : history.length === 0 ? (
-                    <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-4 text-center p-8">
-                       <Clock className="w-12 h-12 opacity-20" />
-                       <div>
-                          <p className="font-bold text-slate-500">No records found</p>
-                          <p className="text-xs mt-1">Your analyzed resumes will appear here automatically.</p>
-                       </div>
-                    </div>
-                  ) : (
-                    history.map((item) => (
-                      <motion.div
-                        key={item.id}
-                        layout
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="group relative p-4 rounded-2xl bg-white border border-primary-green/5 hover:border-primary-green/30 hover:shadow-lg hover:shadow-primary-green/5 transition-all cursor-pointer overflow-hidden"
-                        onClick={() => loadFromHistory(item)}
-                      >
-                         <div className="flex items-start gap-4">
-                            <div className="w-10 h-12 rounded-lg bg-primary-green/5 flex items-center justify-center text-primary-green/40 group-hover:text-sage group-hover:bg-primary-green/10 transition-colors">
-                               <FileText className="w-6 h-6" />
-                            </div>
-                            <div className="flex-1 min-w-0">
-                               <h3 className="text-sm font-bold text-slate-800 truncate mb-1">{item.title}</h3>
-                               <p className="text-[10px] text-slate-500 flex items-center gap-1.5 uppercase font-bold tracking-tighter">
-                                  <Clock className="w-3 h-3" />
-                                  {item.createdAt?.toDate().toLocaleDateString(undefined, { 
-                                    month: 'short', day: 'numeric', year: 'numeric' 
-                                  }) || "Just now"}
-                               </p>
-                               <div className="mt-3 flex items-center gap-2">
-                                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-500 text-[9px] font-black">
-                                    SCORE: {item.analysis.power_score}%
-                                  </span>
-                                  <span className="text-[8px] text-slate-400 font-bold uppercase truncate">
-                                    {item.analysis.ats_report?.matched_keywords?.length || 0} Bot Matches
-                                  </span>
-                               </div>
-                            </div>
-                            <button 
-                              onClick={(e) => deleteHistoryItem(e, item.id!)}
-                              className="opacity-0 group-hover:opacity-100 p-2 text-slate-400 hover:text-red-500 transition-all rounded-lg hover:bg-red-50"
-                            >
-                               <Trash2 className="w-4 h-4" />
-                            </button>
-                         </div>
-                      </motion.div>
-                    ))
-                  )}
-                </div>
-                
-                <div className="p-6 bg-primary-green/5 border-t border-primary-green/10">
-                   <p className="text-[10px] text-slate-500 leading-relaxed italic text-center">
-                     All history is encrypted and linked securely to your workspace footprint.
-                   </p>
-                </div>
-              </motion.aside>
-            </>
-          )}
-        </AnimatePresence>
 
         {/* ── Error Banner ── */}
         <AnimatePresence>
@@ -476,29 +311,14 @@ export default function Dashboard() {
                       )}
 
                       <div className="p-6 space-y-8 overflow-y-auto">
-                        {/* Comparison Charts */}
-                        <div className="bg-white/40 border border-primary-green/10 rounded-2xl overflow-hidden">
-                          <SplitPerspectiveCharts 
-                            atsData={[
-                              { name: "Keywords Found", value: analysis.ats_report?.matched_keywords?.length || 0 },
-                              { name: "Keywords Missing", value: analysis.ats_report?.missing_keywords?.length || 0 },
-                              { name: "PII Sanitized", value: analysis.pii_entities?.length || 0 },
-                              { name: "Legacy Layout", value: 2 } // Mock value for layout complexity
-                            ]}
-                            recruiterData={[
-                              { name: "Impact Points", value: analysis.human_report?.high_impact_points?.length || 0 },
-                              { name: "Red Flags", value: analysis.human_report?.red_flags?.length || 0 },
-                              { name: "Prescription Items", value: analysis.prescription?.length || 0 }
-                            ]}
-                          />
-                        </div>
+
 
                         {/* Bot vs Human */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                           {/* ATS View */}
                           <div className="space-y-3">
-                            <h3 className="text-xs font-bold text-sage uppercase tracking-widest flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-sage animate-pulse" />
+                            <h3 className="text-xs font-bold text-[#0d1408] uppercase tracking-widest flex items-center gap-2">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0d1408] animate-pulse" />
                               What the Bots See
                             </h3>
                             <div className="space-y-1.5">
@@ -508,7 +328,7 @@ export default function Dashboard() {
                                   initial={{ opacity: 0, x: -10 }}
                                   animate={{ opacity: 1, x: 0 }}
                                   transition={{ delay: 0.1 + i * 0.04 }}
-                                  className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-400/5 px-3 py-1.5 rounded-xl border border-emerald-400/10 hover:border-emerald-400/20 transition-colors"
+                                  className="flex items-center gap-2 text-xs text-[#0d1408] bg-white/20 px-3 py-1.5 rounded-xl border border-black/10 hover:border-black/30 transition-colors font-semibold"
                                 >
                                   <Zap className="w-3 h-3 shrink-0" /> Found: {k}
                                 </motion.div>

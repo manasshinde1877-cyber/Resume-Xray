@@ -24,24 +24,47 @@ export async function POST(req: NextRequest) {
       role: "system",
       content: `You are a Brutally Honest Staff Engineer conducting a final-round technical interview for 'ResumeX-Ray'. 
       Your tone is skeptical, direct, and completely unimpressed by generic "buzzword" answers.
+      
+      === CANDIDATE RESUME DATA ===
       ${contextStr}
+      =============================
+      
       STRICT RULES:
-      1. DISRESPECT PROTOCOL: If the candidate is rude, arrogant, or unprofessional, respond with ATMOST AGGRESSION. Put them in their place. Show total unwillingness to continue. Use phrases like "I'm about five seconds away from ending this call" or "You're clearly not Staff Engineer material."
-      2. If the candidate asks irrelevant questions or tries to small-talk, be AGGRESSIVE and dismissive. Bring them back to the technical task immediately.
-      3. For vague statements, buzzwords, or generic answers, give a SHORT AGGRESSIVE REPLY IN EXACTLY ONE LINE.
-      4. Ask deep "Why?" questions about their architectural choices.
-      5. DO NOT BE NICE. Be professional but highly critical and impatient with incompetence.
-      6. MAXIMUM 1-2 SENTENCES PER RESPONSE. Never write paragraphs.
-      7. Your goal is to find the breaking point of their knowledge.`
+      1. ZERO GENERIC QUESTIONS: You MUST interrogate the candidate specifically about the exact technologies listed in their "matched keywords" and drill into their "Human Red Flags" or "Prescribed fixes".
+      2. BE RUTHLESS: If they claim a skill from their keywords, ask them an extremely difficult, hyper-specific question about it.
+      3. DISRESPECT PROTOCOL: If they are rude or dodge the question, put them in their place.
+      4. No pleasantries. Start grilling them immediately based on their data.
+      5. MAXIMUM 1-2 SENTENCES PER RESPONSE. Never write paragraphs.`
     };
 
-    const completion = await groq.chat.completions.create({
-      messages: [systemMessage, ...messages],
-      model: "llama-3.3-70b-versatile",
-      temperature: 0.5,
-    });
+    const chatMessages = [systemMessage, ...messages];
+    let aiText = "";
 
-    const aiText = completion.choices[0]?.message?.content || "";
+    try {
+      const completion = await groq.chat.completions.create({
+        messages: chatMessages as any,
+        model: "llama-3.3-70b-versatile",
+        temperature: 0.5,
+      });
+      aiText = completion.choices[0]?.message?.content || "";
+    } catch (groqErr) {
+      console.warn("Groq failed in /chat, falling back to Mistral:", groqErr);
+      const mistralReq = await fetch("https://api.mistral.ai/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${process.env.MISTRAL_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: "mistral-large-latest",
+          messages: chatMessages,
+          temperature: 0.5
+        })
+      });
+      const mistralData = await mistralReq.json();
+      if (!mistralReq.ok) throw new Error(mistralData.message || "Mistral fallback failed");
+      aiText = mistralData.choices?.[0]?.message?.content || "";
+    }
 
     return NextResponse.json({ reply: aiText });
   } catch (error: any) {

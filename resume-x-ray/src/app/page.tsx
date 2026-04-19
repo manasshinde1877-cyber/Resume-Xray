@@ -20,7 +20,7 @@ export default function LandingPage() {
   const router = useRouter();
   const authSectionRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
-  
+
   const handleAuth = async () => {
     setLoading(true);
     setError("");
@@ -34,7 +34,7 @@ export default function LandingPage() {
       }
       // Set a session flag for bypass mode
       localStorage.setItem('REDACTED_BY_DEFAULT', 'true');
-      
+
       // Full page reload into dashboard to ensure AuthContext picks up the bypass
       window.location.href = "/dashboard";
     } catch (err: any) {
@@ -201,7 +201,7 @@ export default function LandingPage() {
       {/* ── SECTION 2: VISION BREAK ───────────────────────── */}
       <section className="relative h-screen w-full flex items-center justify-center p-6 md:p-24 snap-start bg-[#C3CC9B] overflow-hidden">
         <div className="absolute inset-0 bg-white/5 pointer-events-none" />
-        
+
         <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center relative z-10">
           {/* Left Side: Visual Focal Point */}
           <motion.div
@@ -213,15 +213,15 @@ export default function LandingPage() {
           >
             {/* Boy Avatar (Main Focus - Now behind frame) */}
             <motion.div
-              animate={{ 
+              animate={{
                 y: [0, -15, 0],
-                x: ["-50%", "-50%", "-50%"] 
+                x: ["-50%", "-50%", "-50%"]
               }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-[80%] top-1/2 w-[60%] h-auto z-10 -translate-x-1/2 -translate-y-1/2"
+              className="absolute left-[80%] top-1/2 w-[57%] h-auto z-10 -translate-x-1/2 -translate-y-1/2"
             >
-              <img 
-                src="/landing/Boy.png" 
+              <img
+                src="/landing/Boy.png"
                 alt="Boy Avatar"
                 className="w-full h-full object-contain filter drop-shadow-2xl"
                 style={{ transform: "scaleX(-1)" }}
@@ -230,18 +230,18 @@ export default function LandingPage() {
 
             {/* Decorative Frame (Overlay Container) */}
             <motion.div
-              animate={{ 
+              animate={{
                 y: [0, -20, 0],
                 rotate: [0, 1, 0, -1, 0]
               }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
               className="relative w-full h-full flex items-center justify-center p-4 z-20"
             >
-              <img 
-                src="/landing/Frame.png" 
+              <img
+                src="/landing/Frame.png"
                 alt="Vision Frame"
                 className="w-full max-w-[500px] object-contain drop-shadow-[0_20px_50px_rgba(84,107,65,0.15)]"
-                style={{ 
+                style={{
                   filter: "brightness(0) saturate(100%) invert(98%) sepia(21%) saturate(220%) hue-rotate(344deg) brightness(101%) contrast(101%)"
                 }}
               />
@@ -288,10 +288,10 @@ export default function LandingPage() {
         </div>
 
         {/* Floating Accent */}
-        <motion.div 
-           animate={{ rotate: 360 }} 
-           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-           className="absolute -right-[15%] -top-[15%] w-[40vw] h-[40vw] rounded-full border border-primary-green/5 pointer-events-none"
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+          className="absolute -right-[15%] -top-[15%] w-[40vw] h-[40vw] rounded-full border border-primary-green/5 pointer-events-none"
         />
       </section>
 
@@ -348,13 +348,13 @@ export default function LandingPage() {
                       {error}
                     </div>
                   )}
-                  
+
                   <div className="space-y-2">
                     <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-primary-green/50 px-1">Email Address</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-green/30" />
-                      <input 
-                        type="email" 
+                      <input
+                        type="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@company.com"
@@ -367,8 +367,8 @@ export default function LandingPage() {
                     <label className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-primary-green/50 px-1">Password</label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-green/30" />
-                      <input 
-                        type={showPassword ? "text" : "password"} 
+                      <input
+                        type={showPassword ? "text" : "password"}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
@@ -383,7 +383,7 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <button 
+                  <button
                     onClick={handleAuth}
                     disabled={loading}
                     className="w-full py-4 md:py-5 bg-primary-green text-cream font-bold rounded-xl md:rounded-2xl shadow-xl shadow-primary-green/20 hover:bg-sage transition-all duration-300 flex items-center justify-center gap-3 text-base md:text-lg mt-4 group disabled:opacity-50 disabled:cursor-not-allowed"
@@ -402,7 +402,7 @@ export default function LandingPage() {
                   </div>
 
                   <div className="flex flex-col md:flex-row gap-3">
-                    <button 
+                    <button
                       onClick={handleGoogleAuth}
                       disabled={loading}
                       className="flex-1 py-4 bg-white border border-primary-green/20 text-primary-green font-bold rounded-xl md:rounded-2xl hover:bg-primary-green/5 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
@@ -411,13 +411,13 @@ export default function LandingPage() {
                       Google
                     </button>
 
-                    <button 
+                    <button
                       onClick={handleAppleAuth}
                       disabled={loading}
                       className="flex-1 py-4 bg-black text-white font-bold rounded-xl md:rounded-2xl hover:bg-zinc-900 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
                     >
                       {/* Apple SVG Icon */}
-                      <svg viewBox="0 0 384 512" className="w-4 h-4 fill-current"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 21.8-88.5 21.8-11.4 0-51.1-20.8-83.6-20.1-41.2.9-82 23.3-103.1 60.1-23.5 40.8-18 107.9 4.3 172.6 11.2 32.2 26 67.2 49 90.5 22.1 22.3 45.8 47 74.4 46 28.1-1.1 38.2-18.1 77.7-18.1s48.6 18.1 77.7 17.1c28.2-1.1 51.5-22.1 73.6-45.2 22.5-23.5 31.5-46.3 31.7-47.5-.6-.3-61.2-23.5-61.5-93l-.1.1zM303 12.1c-15-18.7-49.9-13.5-67.4 8.7-19.1 24.5-15.2 59.6 12.4 76 2.3 1.5 51.3 20 68.6-23.5 5.9-14.9 1.5-42.5-13.6-61.2z"/></svg>
+                      <svg viewBox="0 0 384 512" className="w-4 h-4 fill-current"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 21.8-88.5 21.8-11.4 0-51.1-20.8-83.6-20.1-41.2.9-82 23.3-103.1 60.1-23.5 40.8-18 107.9 4.3 172.6 11.2 32.2 26 67.2 49 90.5 22.1 22.3 45.8 47 74.4 46 28.1-1.1 38.2-18.1 77.7-18.1s48.6 18.1 77.7 17.1c28.2-1.1 51.5-22.1 73.6-45.2 22.5-23.5 31.5-46.3 31.7-47.5-.6-.3-61.2-23.5-61.5-93l-.1.1zM303 12.1c-15-18.7-49.9-13.5-67.4 8.7-19.1 24.5-15.2 59.6 12.4 76 2.3 1.5 51.3 20 68.6-23.5 5.9-14.9 1.5-42.5-13.6-61.2z" /></svg>
                       Apple
                     </button>
                   </div>
@@ -487,9 +487,9 @@ export default function LandingPage() {
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1.2, delay: 0.8 }}
-                    className="absolute bottom-[10%] md:bottom-[12%] left-0 right-0 text-center text-primary-green font-bold text-[11px] md:text-[16px] leading-relaxed uppercase tracking-[0.1em] md:tracking-[0.14em] z-30 pointer-events-auto px-10"
+                    className="absolute bottom-[10%] md:bottom-[20%] left-0 right-0 text-center text-primary-green font-bold text-[35px] md:text-[16px] leading-relaxed uppercase tracking-[0.1em] md:tracking-[0.14em] z-30 pointer-events-auto px-10"
                   >
-                    Unlock deep semantic insights,<br className="hidden md:block"/> real-time proctoring,<br className="hidden md:block"/> and strategic contribution mapping.
+                    Unlock deep <br className="hidden md:block" />semantic insights.
                   </motion.p>
                 </motion.div>
               </motion.div>
