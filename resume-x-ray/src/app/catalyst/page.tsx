@@ -140,20 +140,20 @@ export default function ContributionCatalyst() {
   };
 
   return (
-    <div className="min-h-screen text-slate-800 selection:bg-primary-green/30">
+    <div className="min-h-screen bg-[#FFF8EC] text-black selection:bg-[#99AD7A]/30">
       <main className="pt-24 px-6 max-w-7xl mx-auto pb-20">
         <div className="relative mb-8 md:mb-12 text-center px-4">
             <motion.div 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
-               className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-primary-green/10 border border-primary-green/20 text-sage text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6"
+               className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-[#0d1408]/5 border border-black text-black text-[10px] md:text-xs font-bold uppercase tracking-widest mb-4 md:mb-6"
             >
                <Flame className="w-3 md:w-4 h-3 md:h-4" /> Activating Contribution Catalyst
             </motion.div>
-            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 bg-gradient-to-r from-sage to-tan bg-clip-text text-transparent">
+            <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 text-black">
               FUEL YOUR RESUME
             </h1>
-            <p className="text-primary-green/60 text-sm md:text-lg max-w-2xl mx-auto">
+            <p className="text-black text-sm md:text-lg max-w-2xl mx-auto font-bold">
                Bridge your skill gaps by solving real-world open problems. We scan your GitHub footprint and find the perfect "Next Step" for your career.
             </p>
 
@@ -165,9 +165,9 @@ export default function ContributionCatalyst() {
                       initial={{ opacity: 0.1 }}
                       animate={{ 
                         opacity: activeStage === "matched" && i % 3 === 0 ? 0.8 : 0.1,
-                        backgroundColor: activeStage === "matched" && i % 3 === 0 ? "#06b6d4" : "transparent"
+                        backgroundColor: activeStage === "matched" && i % 3 === 0 ? "#546B41" : "transparent"
                       }}
-                      className="w-3 h-3 md:w-4 md:h-4 rounded-sm border border-primary-green/20"
+                      className="w-3 h-3 md:w-4 md:h-4 rounded-sm border border-[#0d1408]/20"
                     />
                   ))}
                </div>
@@ -176,51 +176,51 @@ export default function ContributionCatalyst() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
            <section className="lg:col-span-1 space-y-6">
-              <div className="bg-white/80/50 border border-primary-green/20 rounded-3xl p-8 backdrop-blur-xl relative overflow-hidden group">
+              <div className="bg-[#99AD7A] border border-black rounded-3xl p-8 shadow-xl shadow-black/5 relative overflow-hidden group">
                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                     <Terminal className="w-32 h-32" />
                  </div>
                  
-                 <h2 className="text-2xl font-bold flex items-center gap-2 mb-2 text-[#0d1408]">
-                    <Terminal className="w-6 h-6 text-sage" /> Connect Profile
+                 <h2 className="text-2xl font-black uppercase tracking-widest flex items-center gap-2 mb-2 text-black">
+                    <Terminal className="w-6 h-6 text-black" /> Connect Profile
                  </h2>
-                 <p className="text-[10px] text-slate-500 mb-6 uppercase tracking-widest font-bold">Optional Verification Suite</p>
+                 <p className="text-[10px] text-black/70 mb-6 uppercase tracking-widest font-bold">Optional Verification Suite</p>
                  
-                 <div className="mb-6 p-4 rounded-2xl bg-indigo-500/5 border border-indigo-500/10 text-[11px] leading-relaxed text-primary-green/60">
-                    <span className="text-indigo-400 font-bold block mb-1 underline decoration-indigo-500/30">Why connect GitHub?</span>
-                    Adding your username allows the <span className="text-slate-800">Neural Auditor</span> to cross-reference your actual code history against your resume. This unlocks the ability to identify <span className="text-amber-500 font-bold">Unverified Skills</span>—claims you've made that lack repo evidence.
+                 <div className="mb-6 p-4 rounded-2xl bg-white/20 border border-black text-[11px] font-medium leading-relaxed text-black">
+                    <span className="text-black font-black uppercase tracking-widest block mb-1 underline decoration-black/30">Why connect GitHub?</span>
+                    Adding your username allows the <span className="font-bold underline">Neural Auditor</span> to cross-reference your actual code history against your resume. This unlocks the ability to identify <span className="font-black">Unverified Skills</span>—claims you've made that lack repo evidence.
                  </div>
 
                  <div className="space-y-4">
-                    <div className="p-4 rounded-2xl bg-black/40 border border-primary-green/20 focus-within:border-primary-green/50 transition-all">
+                    <div className="p-4 rounded-2xl bg-white/20 border border-black focus-within:bg-white/30 transition-all">
                        <input 
                          type="text" 
                          value={githubUser}
                          onChange={(e) => setGithubUser(e.target.value)}
                          placeholder="GitHub Username (Optional)" 
-                         className="bg-transparent border-none outline-none w-full text-slate-800"
+                         className="bg-transparent border-none outline-none font-bold w-full text-black placeholder:text-black/40"
                        />
                     </div>
-                    <p className="text-[9px] text-slate-500 text-center uppercase tracking-tighter">
+                    <p className="text-[9px] text-black/60 text-center uppercase tracking-tighter font-black">
                        {githubUser ? "Full Neural Audit Enabled" : "Connecting a profile enables 'Proof-Gap' verification"}
                     </p>
                  </div>
 
                  {/* Previous Projects Window */}
                  {previousProjects.length > 0 && (
-                    <div className="mt-8 pt-8 border-t border-primary-green/20/50">
-                       <h3 className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-4 flex items-center gap-2">
+                    <div className="mt-8 pt-8 border-t border-black/10">
+                       <h3 className="text-[10px] uppercase font-black text-black/60 tracking-widest mb-4 flex items-center gap-2">
                           <LayoutGrid className="w-3 h-3" /> Project Repository History
                        </h3>
                        <div className="grid grid-cols-1 gap-2">
                           {previousProjects.map(repo => (
-                             <div key={repo.id} className="p-3 rounded-xl bg-black/20 border border-primary-green/20/50 flex items-center justify-between group/repo">
+                             <div key={repo.id} className="p-3 rounded-xl bg-white/20 border border-black flex items-center justify-between group/repo">
                                 <div className="overflow-hidden">
-                                   <p className="text-[11px] font-bold text-slate-700 truncate">{repo.name}</p>
-                                   <p className="text-[9px] text-slate-500 font-mono uppercase">{repo.language || "Terminal"}</p>
+                                   <p className="text-[11px] font-bold text-black truncate">{repo.name}</p>
+                                   <p className="text-[9px] text-black/60 font-mono font-bold uppercase">{repo.language || "Terminal"}</p>
                                 </div>
                                 <a href={repo.html_url} target="_blank" className="opacity-0 group-hover/repo:opacity-100 transition-opacity">
-                                   <ChevronRight className="w-3 h-3 text-sage" />
+                                   <ChevronRight className="w-3 h-3 text-black" />
                                 </a>
                              </div>
                           ))}
@@ -229,32 +229,32 @@ export default function ContributionCatalyst() {
                  )}
 
                  {/* Simulated Heatmap */}
-                 <div className="mt-8 pt-8 border-t border-primary-green/20/50">
-                    <p className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-4">Manual Contribution Scan</p>
+                 <div className="mt-8 pt-8 border-t border-black/10">
+                    <p className="text-[10px] uppercase font-black text-black/60 tracking-widest mb-4">Manual Contribution Scan</p>
                     <div className="flex gap-1 flex-wrap">
                        {Array.from({ length: 42 }).map((_, i) => (
                          <motion.div 
                            key={i}
                            animate={{ 
-                             backgroundColor: activeStage === "syncing" && i % 2 === 0 ? "#06b6d4" : 
-                                            activeStage === "matched" && i % 4 === 0 ? "#14b8a6" : "#1e293b" 
+                             backgroundColor: activeStage === "syncing" && i % 2 === 0 ? "#0d1408" : 
+                                            activeStage === "matched" && i % 4 === 0 ? "#DCCCAC" : "rgba(255,255,255,0.2)" 
                            }}
-                           className="w-4 h-4 rounded-[2px]"
+                           className="w-4 h-4 rounded-[2px] border border-black/10"
                          />
                        ))}
                     </div>
                  </div>
               </div>
 
-              <div className="bg-purple-900/10 border border-tan/20 rounded-2xl p-6">
+              <div className="bg-[#99AD7A] border border-black rounded-3xl shadow-xl shadow-black/5 p-6">
                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-tan font-bold text-sm flex items-center gap-2">
+                    <h3 className="text-black font-black uppercase tracking-widest text-sm flex items-center gap-2">
                        <Target className="w-4 h-4" /> Catalyst Targets
                     </h3>
                     <button 
                        onClick={handleSync}
                        disabled={isSyncing || resumeGaps.length === 0}
-                       className="p-2 rounded-lg bg-tan/10 hover:bg-tan/20 text-tan transition"
+                       className="p-2 rounded-lg bg-white/20 hover:bg-white/30 text-black border border-black transition"
                        title="Refresh Audit"
                     >
                        <Activity className={`w-3 h-3 ${isSyncing ? 'animate-spin' : ''}`} />
@@ -267,7 +267,7 @@ export default function ContributionCatalyst() {
                         key={gap} 
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="group flex items-center gap-1.5 px-3 py-1 bg-tan/10 border border-tan/20 text-purple-300 text-[10px] rounded-full font-mono uppercase"
+                        className="group flex items-center gap-1.5 px-3 py-1 bg-[#0d1408] border border-black text-[#DCCCAC] text-[10px] rounded-full font-mono font-black uppercase"
                       >
                          {gap}
                          <button 
@@ -279,7 +279,7 @@ export default function ContributionCatalyst() {
                       </motion.span>
                     ))}
                     {resumeGaps.length === 0 && (
-                      <p className="text-[10px] text-slate-600 italic">No targets defined.</p>
+                      <p className="text-[10px] text-black/60 font-bold italic">No targets defined.</p>
                     )}
                  </div>
 
@@ -290,11 +290,11 @@ export default function ContributionCatalyst() {
                        onChange={(e) => setNewTarget(e.target.value)}
                        onKeyDown={(e) => e.key === 'Enter' && addTarget()}
                        placeholder="Add custom tech gap..."
-                       className="flex-1 bg-black/40 border border-primary-green/20 rounded-lg px-3 py-2 text-[10px] text-slate-700 outline-none focus:border-tan/50 transition-all"
+                       className="flex-1 bg-white/20 border border-black rounded-xl px-3 py-2 text-[10px] text-black outline-none focus:bg-white/30 transition-all placeholder:text-black/40 font-bold uppercase tracking-widest"
                     />
                     <button 
                        onClick={addTarget}
-                       className="px-3 py-2 bg-primary-green hover:bg-tan text-[#0d1408] text-[10px] font-bold rounded-lg transition"
+                       className="px-4 py-2 bg-[#0d1408] hover:bg-black text-[#DCCCAC] text-[10px] uppercase font-black tracking-widest rounded-xl transition"
                     >
                        + ADD
                     </button>
@@ -303,7 +303,7 @@ export default function ContributionCatalyst() {
               <button 
                 onClick={handleSync}
                 disabled={isSyncing || resumeGaps.length === 0}
-                className="w-full py-5 bg-gradient-to-r from-cyan-600 to-primary-green hover:from-primary-green hover:to-tan text-[#0d1408] rounded-3xl font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl shadow-cyan-900/20 disabled:opacity-50 flex items-center justify-center gap-3 border border-white/10"
+                className="w-full py-5 bg-[#546B41] hover:bg-[#3d4f30] text-[#DCCCAC] rounded-3xl font-black text-sm uppercase tracking-[0.2em] transition-all shadow-xl shadow-black/10 disabled:opacity-50 flex items-center justify-center gap-3 border border-black"
               >
                 {isSyncing ? (
                   <>
@@ -317,39 +317,39 @@ export default function ContributionCatalyst() {
                 )}
               </button>
 
-              <div className="bg-white/80/40 border border-primary-green/20 rounded-2xl p-6 backdrop-blur-md">
-                 <h3 className="text-[10px] uppercase font-bold text-slate-500 tracking-widest mb-4 flex items-center gap-2">
+              <div className="bg-[#99AD7A] border border-black shadow-xl shadow-black/5 rounded-3xl p-6">
+                 <h3 className="text-[10px] uppercase font-black text-black tracking-widest mb-4 flex items-center gap-2">
                     <Activity className="w-3 h-3" /> Neural Audit Methodology
                  </h3>
                  <div className="space-y-4">
                     <div className="space-y-1">
-                       <p className="text-[11px] font-bold text-sage">1. Repository Architecture Scan</p>
-                       <p className="text-[10px] text-slate-500 leading-relaxed">Analyzing your 6 most recent repos to map your actual language stack & project domains.</p>
+                       <p className="text-[11px] font-black text-black">1. Repository Architecture Scan</p>
+                       <p className="text-[10px] text-black/70 font-bold leading-relaxed">Analyzing your 6 most recent repos to map your actual language stack & project domains.</p>
                     </div>
                     <div className="space-y-1">
-                       <p className="text-[11px] font-bold text-amber-500">2. Comparative Proof Audit</p>
-                       <p className="text-[10px] text-slate-500 leading-relaxed">Cross-referencing Resume claims vs. GitHub reality to identify "Unverified" skills.</p>
+                       <p className="text-[11px] font-black text-black">2. Comparative Proof Audit</p>
+                       <p className="text-[10px] text-black/70 font-bold leading-relaxed">Cross-referencing Resume claims vs. GitHub reality to identify "Unverified" skills.</p>
                     </div>
                     <div className="space-y-1">
-                       <p className="text-[11px] font-bold text-tan">3. Live Ecosystem Mapping</p>
-                       <p className="text-[10px] text-slate-500 leading-relaxed">Querying the GitHub Search API for live 'good-first-issues' matching your specific gaps.</p>
+                       <p className="text-[11px] font-black text-black">3. Live Ecosystem Mapping</p>
+                       <p className="text-[10px] text-black/70 font-bold leading-relaxed">Querying the GitHub Search API for live 'good-first-issues' matching your specific gaps.</p>
                     </div>
                     <div className="space-y-1">
-                       <p className="text-[11px] font-bold text-[#0d1408]">4. Strategic Rationale</p>
-                       <p className="text-[10px] text-slate-500 leading-relaxed">Generating precise entry plans to maximize your resume's hireability impact.</p>
+                       <p className="text-[11px] font-black text-black">4. Strategic Rationale</p>
+                       <p className="text-[10px] text-black/70 font-bold leading-relaxed">Generating precise entry plans to maximize your resume's hireability impact.</p>
                     </div>
                  </div>
               </div>
            </section>
 
            <section className="lg:col-span-2 space-y-6">
-              <div className="bg-white/80/50 border border-primary-green/20 rounded-3xl p-8 backdrop-blur-xl min-h-[900px] flex flex-col">
+              <div className="bg-[#DCCCAC] border border-black rounded-3xl p-8 shadow-2xl shadow-black/10 min-h-[900px] flex flex-col">
                  <div className="flex items-center justify-between mb-8">
-                    <h2 className="text-2xl font-bold flex items-center gap-2 text-[#0d1408]">
-                       <Target className="w-6 h-6 text-tan" /> Open Opportunities
+                    <h2 className="text-2xl font-black uppercase tracking-widest flex items-center gap-2 text-black">
+                       <Target className="w-6 h-6 text-black" /> Open Opportunities
                     </h2>
                     {activeStage === "matched" && (
-                       <span className="text-[10px] font-bold px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center gap-1">
+                       <span className="text-[10px] font-black px-3 py-1 bg-[#0d1408] border border-black text-[#99AD7A] rounded-full flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3" /> MATCHED TO SKILL GAPS
                        </span>
                     )}
@@ -363,11 +363,11 @@ export default function ContributionCatalyst() {
                          exit={{ opacity: 0 }}
                          className="flex-1 flex flex-col items-center justify-center text-center space-y-4"
                        >
-                          <div className="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center text-slate-600 mb-4">
+                          <div className="w-16 h-16 rounded-full bg-white/30 border border-black flex items-center justify-center text-black mb-4">
                              <Search className="w-8 h-8" />
                           </div>
-                          <p className="text-xl font-bold text-slate-500">Awaiting Signal</p>
-                          <p className="text-sm text-slate-600 max-w-xs">Connecting to your GitHub will allow the Catalyst to bridge your resume to live open source problems.</p>
+                          <p className="text-xl font-black text-black uppercase tracking-widest">Awaiting Signal</p>
+                          <p className="text-sm font-bold text-black/60 max-w-xs">Connecting to your GitHub will allow the Catalyst to bridge your resume to live open source problems.</p>
                        </motion.div>
                     )}
 
@@ -382,15 +382,15 @@ export default function ContributionCatalyst() {
                              <motion.div 
                                animate={{ rotate: 360 }}
                                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                               className="w-32 h-32 rounded-full border-2 border-dashed border-primary-green/30"
+                               className="w-32 h-32 rounded-full border-2 border-dashed border-[#0d1408]"
                              />
                              <div className="absolute inset-0 flex items-center justify-center">
-                                <Activity className="w-8 h-8 text-sage animate-pulse" />
+                                <Activity className="w-8 h-8 text-black animate-pulse" />
                              </div>
                           </div>
                           <div>
-                            <p className="text-xl font-bold text-sage">Mining Contributions</p>
-                            <p className="text-sm text-slate-500">Mapping your unique neural footprint onto repository structures...</p>
+                            <p className="text-xl font-black text-black uppercase tracking-widest">Mining Contributions</p>
+                            <p className="text-sm font-bold text-black/60 pt-2">Mapping your unique neural footprint onto repository structures...</p>
                           </div>
                        </motion.div>
                     )}
@@ -405,30 +405,30 @@ export default function ContributionCatalyst() {
                              <motion.div 
                                 key={issue.id}
                                 whileHover={{ x: 10 }}
-                                className="group p-5 rounded-2xl bg-black/40 border border-primary-green/20 hover:border-primary-green/30 transition-all flex items-start justify-between gap-4"
+                                className="group p-5 rounded-2xl bg-white/20 border border-black hover:bg-white/40 transition-all flex items-start justify-between gap-4 shadow-sm"
                              >
                                 <div className="space-y-3 flex-1">
                                    <div className="flex items-center gap-3">
                                       <span className={`px-2 py-0.5 rounded-full text-[8px] font-black uppercase tracking-widest ${
                                          issue.category === 'Lacking Proof' 
-                                         ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20' 
-                                         : 'bg-tan/10 text-tan border border-tan/20'
+                                         ? 'bg-[#0d1408] text-[#DCCCAC] border border-black' 
+                                         : 'bg-white text-black border border-black'
                                       }`}>
                                          {issue.category}
                                       </span>
-                                      <span className="text-[10px] font-mono text-slate-500 uppercase tracking-tighter">
+                                      <span className="text-[10px] font-black text-black/50 uppercase tracking-widest">
                                          {issue.repository_url.split('/').slice(-2).join('/')}
                                       </span>
                                    </div>
-                                   <h3 className="text-lg font-bold group-hover:text-sage transition-colors leading-tight">
+                                   <h3 className="text-lg font-black text-black leading-tight group-hover:underline decoration-2">
                                       {issue.title}
                                    </h3>
-                                   <p className="text-xs text-primary-green/60 leading-relaxed italic border-l-2 border-primary-green/20 pl-3">
+                                   <p className="text-xs text-black/70 font-bold leading-relaxed italic border-l-2 border-[#0d1408] pl-3">
                                       {issue.rationale}
                                    </p>
                                    <div className="flex gap-2 pt-1">
                                       {issue.labels.slice(0, 2).map(l => (
-                                        <span key={l.name} className="px-2 py-0.5 rounded bg-slate-800 text-[9px] text-slate-500 font-medium">
+                                        <span key={l.name} className="px-2 py-0.5 rounded-md bg-[#0d1408] text-[#99AD7A] border border-black text-[9px] font-black uppercase tracking-widest">
                                           #{l.name}
                                         </span>
                                       ))}
@@ -436,7 +436,7 @@ export default function ContributionCatalyst() {
                                 </div>
                                 <button 
                                   onClick={() => handleGeneratePitch(issue)}
-                                  className="shrink-0 p-3 rounded-xl bg-cyan-600/10 text-sage hover:bg-cyan-600 hover:text-[#0d1408] transition-all border border-primary-green/20 mt-2"
+                                  className="shrink-0 p-3 rounded-xl bg-[#0d1408] text-[#DCCCAC] hover:bg-black transition-all border border-black mt-2 shadow-md"
                                 >
                                    <ChevronRight className="w-5 h-5" />
                                 </button>
@@ -457,62 +457,62 @@ export default function ContributionCatalyst() {
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={() => setPitchIssue(null)}
-                  className="fixed inset-0 bg-primary-green/5/90 backdrop-blur-sm"
+                  className="fixed inset-0 bg-[#0d1408]/80 backdrop-blur-md"
                 />
                 
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                  className="relative w-full max-w-2xl bg-white/80 border border-primary-green/20 rounded-3xl p-8 shadow-2xl z-10"
+                  className="relative w-full max-w-2xl bg-[#FFF8EC] border border-black rounded-3xl p-8 shadow-2xl z-10"
                 >
                    <button 
                      onClick={() => setPitchIssue(null)}
-                     className="absolute top-4 right-4 text-slate-500 hover:text-[#0d1408] transition-colors"
+                     className="absolute top-6 right-6 text-black/50 hover:text-black transition-colors"
                    >
                      ✕
                    </button>
                    
                    <div className="flex items-center gap-4 mb-8">
-                      <div className="w-12 h-12 rounded-2xl bg-primary-green/10 flex items-center justify-center text-sage">
+                      <div className="w-12 h-12 rounded-2xl bg-[#99AD7A] border border-black flex items-center justify-center text-black">
                          <MessageSquare className="w-6 h-6" />
                       </div>
                       <div>
-                         <h2 className="text-2xl font-bold">One-Click PR Pitch</h2>
-                         <p className="text-sm text-primary-green/60">Strategic entry plan for {pitchIssue.title}</p>
+                         <h2 className="text-2xl font-black uppercase tracking-widest text-black">One-Click PR Pitch</h2>
+                         <p className="text-sm font-bold text-black/60">Strategic entry plan for {pitchIssue.title}</p>
                       </div>
                    </div>
 
                    {isGeneratingPitch ? (
                      <div className="space-y-6 py-10">
-                        <div className="h-4 bg-slate-800 rounded-full animate-pulse w-3/4" />
-                        <div className="h-4 bg-slate-800 rounded-full animate-pulse w-1/2" />
-                        <div className="h-32 bg-slate-800 rounded-2xl animate-pulse" />
+                        <div className="h-4 bg-[#0d1408]/10 rounded-full animate-pulse w-3/4" />
+                        <div className="h-4 bg-[#0d1408]/10 rounded-full animate-pulse w-1/2" />
+                        <div className="h-32 bg-[#0d1408]/10 rounded-2xl animate-pulse" />
                      </div>
                    ) : generatedPitch && (
                      <div className="space-y-8">
                         <div>
-                           <h4 className="text-[10px] font-bold text-primary-green uppercase tracking-widest mb-3 flex items-center gap-2">
+                           <h4 className="text-[10px] font-black text-[#546B41] uppercase tracking-widest mb-3 flex items-center gap-2">
                               <Sparkles className="w-3 h-3" /> Contribution Strategy
                            </h4>
-                           <div className="bg-black/40 border border-primary-green/20 p-5 rounded-2xl text-slate-700 leading-relaxed italic border-l-4 border-l-primary-green">
+                           <div className="bg-white/50 border border-black p-5 rounded-2xl text-black font-medium leading-relaxed italic border-l-4 border-l-[#546B41]">
                              "{generatedPitch.strategy}"
                            </div>
                         </div>
 
                         <div>
                            <div className="flex items-center justify-between mb-3">
-                              <h4 className="text-[10px] font-bold text-tan uppercase tracking-widest flex items-center gap-2">
+                              <h4 className="text-[10px] font-black text-black uppercase tracking-widest flex items-center gap-2">
                                 <MessageSquare className="w-3 h-3" /> Professional Pitch
                               </h4>
                               <button 
                                 onClick={() => navigator.clipboard.writeText(generatedPitch.comment)}
-                                className="text-[10px] font-bold text-primary-green/60 hover:text-sage transition-colors"
+                                className="text-[10px] font-black text-[#546B41] hover:text-black transition-colors"
                               >
                                  COPY TEXT
                               </button>
                            </div>
-                           <pre className="bg-primary-green/5 p-6 rounded-2xl text-xs font-mono text-slate-700 whitespace-pre-wrap border border-primary-green/20">
+                           <pre className="bg-white/50 p-6 rounded-2xl text-xs font-mono font-bold text-black whitespace-pre-wrap border border-black">
                               {generatedPitch.comment}
                            </pre>
                         </div>
@@ -521,13 +521,13 @@ export default function ContributionCatalyst() {
                            <a 
                              href={pitchIssue.html_url}
                              target="_blank"
-                             className="flex-1 py-4 bg-cyan-600 hover:bg-primary-green text-[#0d1408] rounded-2xl font-bold text-center transition shadow-lg shadow-cyan-900/40"
+                             className="flex-1 py-4 bg-[#0d1408] hover:bg-black text-[#DCCCAC] border border-black rounded-2xl font-black uppercase tracking-widest text-[10px] text-center transition shadow-lg"
                            >
                              GO TO ISSUE
                            </a>
                            <button 
                              onClick={() => setPitchIssue(null)}
-                             className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-slate-700 rounded-2xl font-bold transition"
+                             className="px-8 py-4 bg-white/50 hover:bg-white border border-black text-black rounded-2xl font-black uppercase tracking-widest text-[10px] transition"
                            >
                              DONE
                            </button>

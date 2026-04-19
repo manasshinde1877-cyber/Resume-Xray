@@ -269,8 +269,8 @@ export default function ValidationArena() {
       <main className="pt-20 px-6 min-h-screen pb-12 flex flex-col gap-6 max-w-[1600px] mx-auto w-full">
         <header className="mb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-sage">Validation Arena</h1>
-            <p className="text-primary-green/60 mt-2">Dynamic skill-gap generation & code validation.</p>
+            <h1 className="text-3xl font-black text-[#0d1408] tracking-tight">Validation Arena</h1>
+            <p className="text-[#0d1408]/60 mt-2 text-sm">Dynamic skill-gap generation & neural code validation.</p>
           </div>
 
           <motion.button
@@ -279,12 +279,12 @@ export default function ValidationArena() {
             onClick={() => setIsLockedIn(!isLockedIn)}
             className={`px-6 py-3 rounded-xl border-2 transition-all flex items-center gap-3 font-bold uppercase tracking-widest text-xs ${
               isLockedIn 
-                ? 'bg-primary-green/20 border-primary-green text-sage shadow-[0_0_20px_rgba(6,182,212,0.3)]' 
-                : 'bg-white/80 border-primary-green/20 text-slate-500 hover:border-slate-700'
+                ? 'bg-[#0d1408] border-black text-[#99AD7A] shadow-xl' 
+                : 'bg-white/20 border-black text-[#0d1408]/60 hover:text-[#0d1408]'
             }`}
           >
             <Shield className={`w-4 h-4 ${isLockedIn ? 'animate-pulse' : ''}`} />
-            {isLockedIn ? "Neural Lock: ENABLED (click to disable)" : "Neural Lock: DISABLED (click to enable)"}
+            {isLockedIn ? "Neural Lock: ENABLED" : "Neural Lock: DISABLED"}
           </motion.button>
         </header>
 
@@ -316,31 +316,31 @@ export default function ValidationArena() {
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
 
-          <section className="bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-tan">
-              <Zap className="w-5 h-5" /> Dynamic Project Generator
+          <section className="bg-[#99AD7A] rounded-3xl p-6 flex flex-col shadow-xl shadow-black/5">
+            <h2 className="text-lg font-black mb-4 flex items-center gap-2 text-[#0d1408] uppercase tracking-widest">
+              <Zap className="w-5 h-5" /> Challenge
             </h2>
             
-            <div className="bg-primary-green/5 rounded-xl p-4 min-h-[150px] border border-primary-green/20 flex flex-col justify-center">
+            <div className="bg-white/20 rounded-xl p-6 min-h-[150px] border border-black flex flex-col justify-center">
               {isGenerating ? (
-                <p className="text-slate-500 animate-pulse text-center">Detecting skill gaps...</p>
+                <p className="text-[#0d1408]/40 animate-pulse text-center text-xs font-bold font-mono">LOCATING NEURAL GAPS...</p>
               ) : projectIdea ? (
                 <>
-                  <p className="text-slate-700 leading-relaxed text-sm">
+                  <p className="text-[#0d1408] leading-relaxed text-sm font-medium">
                     {projectIdea}
                   </p>
                   {hints.length > 0 && (
                     <div className="mt-4 space-y-2">
                        {hints.map((h, i) => (
-                         <div key={i} className="bg-tan/10 border border-tan/20 p-2 rounded-lg text-[11px] text-purple-300 italic">
-                            💡 Hint {i+1}: {h}
+                         <div key={i} className="bg-white/30 border border-black p-3 rounded-lg text-[10px] text-[#0d1408] italic">
+                            💡 {h}
                          </div>
                        ))}
                     </div>
                   )}
                 </>
               ) : (
-                <p className="text-slate-600 text-center">No project generated.</p>
+                <p className="text-[#0d1408]/30 text-center text-xs font-bold font-mono uppercase tracking-widest">Awaiting Engine...</p>
               )}
             </div>
             
@@ -348,56 +348,56 @@ export default function ValidationArena() {
               <button 
                 onClick={generateProject}
                 disabled={isGenerating}
-                className="w-full py-3 px-4 bg-primary-green hover:bg-tan text-[#0d1408] rounded-lg font-semibold transition disabled:opacity-50"
+                className="w-full py-4 px-4 bg-[#546B41] hover:bg-[#3d4f30] text-[#DCCCAC] rounded-xl font-black uppercase tracking-widest text-[10px] transition shadow-lg shadow-black/10 disabled:opacity-50"
               >
-                Generate Skill-Gap Challenge
+                Incept Challenge
               </button>
 
               {projectIdea && !feedback && (
                 <button 
                   onClick={requestHint}
                   disabled={isGettingHint}
-                  className="w-full py-2 px-4 bg-slate-800 hover:bg-slate-700 text-tan rounded-lg text-sm font-medium transition flex items-center justify-center gap-2 border border-slate-700"
+                  className="w-full py-3 px-4 bg-white/20 hover:bg-white/30 text-[#0d1408] rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center justify-center gap-2 border border-black"
                 >
-                  <Activity className="w-4 h-4" />
-                  {isGettingHint ? "Consulting Documentation..." : "Request Technical Hint"}
+                  <Activity className="w-3 h-3" />
+                  {isGettingHint ? "Tracing Solution..." : "Request Hint"}
                 </button>
               )}
             </div>
           </section>
 
-          <section className={`bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col gap-4 transition-opacity ${!isLockedIn ? 'opacity-50' : ''}`}>
-             <h2 className="text-xl font-semibold flex items-center gap-2 text-sage">
-                <Fingerprint className="w-5 h-5" /> Behavioral Monitor
+          <section className={`bg-[#99AD7A] rounded-3xl p-6 flex flex-col gap-4 shadow-xl shadow-black/5 transition-opacity ${!isLockedIn ? 'opacity-50' : ''}`}>
+             <h2 className="text-lg font-black flex items-center gap-2 text-[#0d1408] uppercase tracking-widest">
+                <Fingerprint className="w-5 h-5" /> Analytics
              </h2>
              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl">
-                   <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Activity</p>
-                   <p className={`text-sm font-mono ${isLockedIn && Date.now() - lastTyped < 5000 ? 'text-emerald-400' : 'text-slate-500'}`}>
-                      {!isLockedIn ? "Paused" : (Date.now() - lastTyped < 5000 ? "Active" : "Idle")}
+                <div className="bg-white/20 border border-black p-4 rounded-xl">
+                   <p className="text-[10px] text-[#0d1408]/40 uppercase font-black tracking-widest mb-1">Activity</p>
+                   <p className={`text-sm font-mono font-bold ${isLockedIn && Date.now() - lastTyped < 5000 ? 'text-[#0d1408]' : 'text-[#0d1408]/40'}`}>
+                      {!isLockedIn ? "PAUSED" : (Date.now() - lastTyped < 5000 ? "ACTIVE" : "IDLE")}
                    </p>
                 </div>
-                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl">
-                   <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Deletion Ratio</p>
-                   <p className="text-sm font-mono text-cyan-300">
+                <div className="bg-white/20 border border-black p-4 rounded-xl">
+                   <p className="text-[10px] text-[#0d1408]/40 uppercase font-black tracking-widest mb-1">Deletions</p>
+                   <p className="text-sm font-mono font-bold text-[#0d1408]">
                       {!isLockedIn ? "--" : (keystrokeCount > 0 ? ((backspaceCount / keystrokeCount) * 100).toFixed(0) + "%" : "0%")}
                    </p>
                 </div>
-                <div className="bg-primary-green/5/50 border border-primary-green/20 p-4 rounded-xl col-span-2">
-                   <p className="text-[10px] text-slate-500 uppercase tracking-widest mb-1">Neural Flow Status</p>
+                <div className="bg-white/20 border border-black p-4 rounded-xl col-span-2">
+                   <p className="text-[10px] text-[#0d1408]/40 uppercase font-black tracking-widest mb-1">Neural Flow</p>
                    <div className="flex items-center gap-2 mt-2">
-                      <div className={`w-2 h-2 rounded-full ${!isLockedIn ? 'bg-slate-700' : (systemWarning ? 'bg-red-500 animate-ping' : 'bg-primary-green animate-pulse')}`} />
-                      <span className="text-xs text-primary-green/60 font-mono">
-                         {!isLockedIn ? "Neural Lock Required" : (systemWarning ? "Authorship Flagged" : "Monitoring Signature...")}
+                      <div className={`w-2 h-2 rounded-full ${!isLockedIn ? 'bg-[#0d1408]/20' : (systemWarning ? 'bg-red-500 animate-ping' : 'bg-[#0d1408] animate-pulse')}`} />
+                      <span className="text-[10px] text-[#0d1408] font-bold uppercase tracking-tighter">
+                         {!isLockedIn ? "Lock Required" : (systemWarning ? "Authorship Flagged" : "Stable Signature")}
                       </span>
                    </div>
                 </div>
              </div>
           </section>
 
-          <section className="bg-white/80 border border-primary-green/20 rounded-2xl p-6 flex flex-col min-h-[650px] md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 relative">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2 text-emerald-400">
-              <Code className="w-5 h-5" /> Code & Validate
+          <section className="bg-[#DCCCAC] rounded-3xl p-6 flex flex-col min-h-[650px] md:col-start-2 md:col-span-2 md:row-start-1 md:row-span-2 relative shadow-2xl shadow-black/10">
+            <h2 className="text-lg font-black mb-4 flex items-center gap-2 text-[#0d1408] uppercase tracking-widest">
+              <Code className="w-5 h-5" /> Workspace
             </h2>
 
             <AnimatePresence>
@@ -406,23 +406,23 @@ export default function ValidationArena() {
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
-                  className="absolute top-16 left-6 right-6 z-50 bg-red-500 text-[#0d1408] p-3 rounded-lg text-xs font-bold shadow-2xl flex items-center gap-2 border border-white/20"
+                  className="absolute top-16 left-6 right-6 z-50 bg-[#0d1408] text-red-500 p-4 rounded-xl text-xs font-black uppercase tracking-widest shadow-2xl flex items-center gap-3 border border-red-500/20"
                 >
-                   <AlertCircle className="w-4 h-4" />
+                   <AlertCircle className="w-5 h-5 animate-pulse" />
                    {systemWarning}
                 </motion.div>
               )}
             </AnimatePresence>
             
-            <div className="flex-1 flex flex-col rounded-xl overflow-hidden border border-primary-green/20">
-              <div className="bg-primary-green/5 px-4 py-2 border-b border-primary-green/20 flex items-center justify-between">
+            <div className="flex-1 flex flex-col rounded-2xl overflow-hidden border border-black bg-white/20">
+              <div className="bg-white/10 px-4 py-2 border-b border-black flex items-center justify-between">
                  <div className="flex items-center gap-2">
-                    <Terminal className="w-4 h-4 text-slate-500" />
-                    <span className="text-xs text-slate-500 font-mono">solution.tsx</span>
+                    <Terminal className="w-4 h-4 text-[#0d1408]/40" />
+                    <span className="text-[10px] text-[#0d1408]/60 font-black uppercase tracking-widest">Compiler v2.0</span>
                  </div>
                  {timeLeft !== null && (
-                    <div className={`text-xs font-mono font-bold px-3 py-1 rounded-full ${timeLeft < 60 ? 'bg-red-500/20 text-red-500 animate-pulse' : 'bg-primary-green/10 text-sage'}`}>
-                       Time Remaining: {formatTime(timeLeft)}
+                    <div className={`text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full ${timeLeft < 60 ? 'bg-red-500/20 text-red-600 animate-pulse' : 'bg-[#0d1408]/10 text-[#0d1408]'}`}>
+                       DUE: {formatTime(timeLeft)}
                     </div>
                  )}
               </div>
@@ -431,23 +431,23 @@ export default function ValidationArena() {
                 onChange={(e) => setCode(e.target.value)}
                 onKeyDown={handleKeyDown}
                 onPaste={handlePaste}
-                placeholder="// Write your elite solution here..."
-                className="flex-1 bg-primary-green/5 text-slate-700 p-4 font-mono text-sm resize-none focus:outline-none focus:ring-1 focus:ring-primary-green/50"
+                placeholder="// Write your neural solution here..."
+                className="flex-1 bg-transparent text-[#0d1408] p-6 font-mono text-sm resize-none focus:outline-none placeholder:text-[#0d1408]/30"
               />
             </div>
 
             <button 
               onClick={validateCode}
               disabled={isValidating || !code || !projectIdea}
-              className="mt-6 w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-500 text-[#0d1408] rounded-lg font-semibold transition disabled:opacity-50 flex justify-center gap-2"
+              className="mt-6 w-full py-4 px-4 bg-[#0d1408] hover:bg-black text-[#DCCCAC] rounded-xl font-black uppercase tracking-widest text-[10px] transition shadow-lg shadow-black/20 disabled:opacity-50 flex justify-center gap-2"
             >
-              <CheckCircle2 className="w-5 h-5" /> 
-              {isValidating ? "Evaluating Code..." : "Submit to Validation Engine"}
+              <CheckCircle2 className="w-4 h-4" /> 
+              {isValidating ? "Validating Neural Logic..." : "Submit Solution"}
             </button>
 
             {feedback && (
-              <div className="mt-4 bg-slate-800/50 p-4 rounded-xl border border-slate-700/50">
-                <p className="text-sm text-slate-700 leading-relaxed break-words">{feedback}</p>
+              <div className="mt-4 bg-white/30 p-6 rounded-2xl border border-black">
+                <p className="text-sm text-[#0d1408] leading-relaxed break-words font-medium italic">&ldquo;{feedback}&rdquo;</p>
               </div>
             )}
           </section>
