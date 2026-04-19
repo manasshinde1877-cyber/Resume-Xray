@@ -6,11 +6,37 @@ import { ArrowRight, Sparkles, LogIn, UserPlus, ShieldCheck, Mail, Lock, Chevron
 import Link from "next/link";
 import { RepellingCubes } from "@/components/RepellingCubes";
 
+import { registerUser, loginUser } from "@/lib/firebase/auth";
+import { useRouter } from "next/navigation";
+
 export default function LandingPage() {
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
   const authSectionRef = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
+  
+  const handleAuth = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      if (authMode === "login") {
+        await loginUser(email, password);
+      } else {
+        await registerUser(email, password);
+      }
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err.message || "Auth failed: Check details");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Parallax for floating images
   const y1 = useTransform(scrollY, [0, 500], [0, -100]);
@@ -188,12 +214,20 @@ export default function LandingPage() {
                 </div>
 
                 <div className="space-y-6">
+                  {error && (
+                    <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-xs text-center font-bold">
+                      {error}
+                    </div>
+                  )}
+                  
                   <div className="space-y-2">
                     <label className="text-xs font-bold uppercase tracking-widest text-primary-green/50 px-1">Email Address</label>
                     <div className="relative">
                       <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-green/30" />
-                      <input
-                        type="email"
+                      <input 
+                        type="email" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@company.com"
                         className="w-full bg-primary-green/5 border border-primary-green/10 rounded-2xl py-4 pl-12 pr-4 text-primary-green placeholder:text-primary-green/20 focus:outline-none focus:ring-2 focus:ring-primary-green/20 transition-all font-medium"
                       />
@@ -204,8 +238,10 @@ export default function LandingPage() {
                     <label className="text-xs font-bold uppercase tracking-widest text-primary-green/50 px-1">Password</label>
                     <div className="relative">
                       <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-primary-green/30" />
-                      <input
-                        type={showPassword ? "text" : "password"}
+                      <input 
+                        type={showPassword ? "text" : "password"} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                         placeholder="••••••••"
                         className="w-full bg-primary-green/5 border border-primary-green/10 rounded-2xl py-4 pl-12 pr-12 text-primary-green placeholder:text-primary-green/20 focus:outline-none focus:ring-2 focus:ring-primary-green/20 transition-all font-medium"
                       />
@@ -218,13 +254,14 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <Link
-                    href="/dashboard"
-                    className="w-full py-5 bg-primary-green text-cream font-bold rounded-2xl shadow-xl shadow-primary-green/20 hover:bg-sage transition-all duration-300 flex items-center justify-center gap-3 text-lg mt-4 group"
+                  <button 
+                    onClick={handleAuth}
+                    disabled={loading}
+                    className="w-full py-5 bg-primary-green text-cream font-bold rounded-2xl shadow-xl shadow-primary-green/20 hover:bg-sage transition-all duration-300 flex items-center justify-center gap-3 text-lg mt-4 group disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {authMode === "login" ? "Enter Workspace" : "Create Account"}
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                    {loading ? "Decrypting..." : (authMode === "login" ? "Enter Workspace" : "Create Account")}
+                    {!loading && <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />}
+                  </button>
                 </div>
               </motion.div>
 

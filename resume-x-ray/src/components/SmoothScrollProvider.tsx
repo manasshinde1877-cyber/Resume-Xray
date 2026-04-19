@@ -41,7 +41,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 }

@@ -290,15 +290,15 @@ export default function ValidationArena() {
 
         {/* Proctoring Monitor - Fixed to Top Center */}
         {isLockedIn && (
-          <div className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-3 pointer-events-none">
+          <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[100] flex flex-col items-center gap-3 pointer-events-none">
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className={`w-48 h-12 rounded-full overflow-hidden border-2 bg-white/80/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-3 ${proctorStatus === 'active' ? 'border-primary-green/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
+            className={`w-64 h-18 rounded-full overflow-hidden border-2 bg-white/80/80 shadow-2xl transition-colors pointer-events-auto backdrop-blur-xl flex items-center px-4 gap-4 ${proctorStatus === 'active' ? 'border-primary-green/30' : 'border-red-500 ring-4 ring-red-500/20'}`}
           >
-             <div className="w-10 h-10 rounded-full overflow-hidden border border-white/10 shrink-0">
-                <video ref={videoRef} className="w-full h-full object-cover grayscale opacity-70" muted playsInline />
-                <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full pointer-events-none" width={40} height={40} />
+             <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-primary-green/30 shrink-0 relative">
+                <video ref={videoRef} className="w-full h-full object-cover" muted playsInline autoPlay />
+                <canvas ref={canvasRef} className="absolute top-0 left-0 w-full h-full pointer-events-none" width={64} height={64} />
              </div>
              
              <div className="flex flex-col flex-1 overflow-hidden">

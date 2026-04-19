@@ -1,11 +1,15 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { AlertCircle, Zap, LayoutGrid, Sparkles, ChevronRight, Target, ArrowUpRight } from "lucide-react";
 import { IngestionCanvas } from "@/components/IngestionCanvas";
 import { SplitPerspectiveCharts } from "@/components/SplitPerspectiveCharts";
 import { ScrollReveal } from "@/components/ScrollReveal";
-import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle, Zap, LayoutGrid, Sparkles, ChevronRight, Target, ArrowUpRight } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { uploadResumeAndSave } from "@/lib/firebase/resumeServices";
+import { auth } from "@/lib/firebase/config";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -19,7 +23,9 @@ const fadeLeft = (delay = 0) => ({
   transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as any, delay },
 });
 
-export default function Home() {
+export default function Dashboard() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
   const [analysis, setAnalysis] = useState<any | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,6 +69,11 @@ export default function Home() {
       const analyzeData = await analyzeRes.json();
       if (analyzeData.error) {
         throw new Error(analyzeData.error?.message || analyzeData.error || "Analysis failed");
+      }
+
+      // Persist to Firebase (only if logged in)
+      if (user) {
+        await uploadResumeAndSave(user.uid, file, analyzeData.analysis);
       }
 
       setAnalysis(analyzeData.analysis);

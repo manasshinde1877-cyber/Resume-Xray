@@ -13,7 +13,11 @@ const navLinks = [
   { href: "/validation", label: "Validation arena" },
 ];
 
+import { useAuth } from "@/context/AuthContext";
+import { logoutUser } from "@/lib/firebase/auth";
+
 export function Navigation() {
+  const { user } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -22,6 +26,15 @@ export function Navigation() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+      window.location.href = "/";
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
 
   const active = pathname;
 
@@ -49,23 +62,14 @@ export function Navigation() {
           <Link
             key={link.href}
             href={link.href}
-            className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 group ${
+            prefetch={true}
+            className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 group flex items-center justify-center ${
               active === link.href
-                ? "text-primary-green"
-                : "text-foreground/60 hover:text-foreground"
+                ? "text-primary-green bg-primary-green/10"
+                : "text-foreground/60 md:hover:text-foreground md:hover:bg-primary-green/5"
             }`}
           >
-            {active === link.href && (
-              <motion.span
-                layoutId="nav-pill"
-                className="absolute inset-0 bg-primary-green/10 rounded-lg border border-primary-green/20"
-                transition={{ type: "spring", duration: 0.5 }}
-              />
-            )}
             <span className="relative z-10">{link.label}</span>
-            {active !== link.href && (
-              <span className="absolute inset-0 bg-primary-green/0 hover:bg-primary-green/5 rounded-lg transition-colors" />
-            )}
           </Link>
         ))}
 
@@ -82,6 +86,27 @@ export function Navigation() {
           </motion.span>
           Contribution Catalyst
         </Link>
+
+        {user ? (
+          <div className="flex items-center gap-3 ml-2 pl-2 border-l border-primary-green/10">
+            <span className="text-[10px] font-bold text-primary-green/60 uppercase tracking-tighter max-w-[80px] truncate">
+              {user.email}
+            </span>
+            <button
+              onClick={handleLogout}
+              className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold uppercase tracking-wider hover:bg-red-500/20 transition-all active:scale-95"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <Link
+            href="/#auth-section"
+            className="ml-2 flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full bg-primary-green text-cream hover:bg-sage transition-all duration-300"
+          >
+            Launch Agent
+          </Link>
+        )}
       </div>
     </nav>
   );

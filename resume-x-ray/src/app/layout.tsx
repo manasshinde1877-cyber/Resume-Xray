@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { BlindModeProvider } from "@/context/BlindModeContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { SmoothScrollProvider } from "@/components/SmoothScrollProvider";
 import { MouseReactiveGrid } from "@/components/MouseReactiveGrid";
 import { FloatingSpheres } from "@/components/FloatingSpheres";
@@ -34,7 +35,8 @@ export default function RootLayout({
     >
       <body className="flex flex-col bg-background text-foreground selection:bg-primary-green/30 overflow-x-hidden">
         <BlindModeProvider>
-          <SmoothScrollProvider>
+          <AuthProvider>
+            <SmoothScrollProvider>
               <div className="relative flex flex-col min-h-screen">
                 <Navigation />
                 
@@ -52,7 +54,8 @@ export default function RootLayout({
                   {children}
                 </div>
               </div>
-          </SmoothScrollProvider>
+            </SmoothScrollProvider>
+          </AuthProvider>
         </BlindModeProvider>
       </body>
     </html>
