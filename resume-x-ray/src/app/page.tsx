@@ -26,11 +26,17 @@ export default function LandingPage() {
     setError("");
     try {
       if (authMode === "login") {
-        await loginUser(email, password);
+        const user = await loginUser(email, password);
+        localStorage.setItem('dev_bypass_user', JSON.stringify(user));
       } else {
-        await registerUser(email, password);
+        const user = await registerUser(email, password);
+        localStorage.setItem('dev_bypass_user', JSON.stringify(user));
       }
-      router.push("/dashboard");
+      // Set a session flag for bypass mode
+      localStorage.setItem('REDACTED_BY_DEFAULT', 'true');
+      
+      // Full page reload into dashboard to ensure AuthContext picks up the bypass
+      window.location.href = "/dashboard";
     } catch (err: any) {
       setError(err.message || "Auth failed: Check details");
     } finally {
@@ -192,7 +198,104 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ── SECTION 2: AUTH SCREEN ────────────────────────── */}
+      {/* ── SECTION 2: VISION BREAK ───────────────────────── */}
+      <section className="relative h-screen w-full flex items-center justify-center p-6 md:p-24 snap-start bg-[#C3CC9B] overflow-hidden">
+        <div className="absolute inset-0 bg-white/5 pointer-events-none" />
+        
+        <div className="max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center relative z-10">
+          {/* Left Side: Visual Focal Point */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="relative flex items-center justify-center h-full min-h-[500px]"
+          >
+            {/* Boy Avatar (Main Focus - Now behind frame) */}
+            <motion.div
+              animate={{ 
+                y: [0, -15, 0],
+                x: ["-50%", "-50%", "-50%"] 
+              }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute left-[80%] top-1/2 w-[60%] h-auto z-10 -translate-x-1/2 -translate-y-1/2"
+            >
+              <img 
+                src="/landing/Boy.png" 
+                alt="Boy Avatar"
+                className="w-full h-full object-contain filter drop-shadow-2xl"
+                style={{ transform: "scaleX(-1)" }}
+              />
+            </motion.div>
+
+            {/* Decorative Frame (Overlay Container) */}
+            <motion.div
+              animate={{ 
+                y: [0, -20, 0],
+                rotate: [0, 1, 0, -1, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full h-full flex items-center justify-center p-4 z-20"
+            >
+              <img 
+                src="/landing/Frame.png" 
+                alt="Vision Frame"
+                className="w-full max-w-[500px] object-contain drop-shadow-[0_20px_50px_rgba(84,107,65,0.15)]"
+                style={{ 
+                  filter: "brightness(0) saturate(100%) invert(98%) sepia(21%) saturate(220%) hue-rotate(344deg) brightness(101%) contrast(101%)"
+                }}
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Right Side: Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
+            viewport={{ once: false, amount: 0.3 }}
+            className="flex flex-col gap-12"
+          >
+            {/* Heading in a single line */}
+            <div className="space-y-4">
+              <span className="text-[10px] font-black text-primary-green/40 uppercase tracking-[0.8em] block">
+                The New Standard
+              </span>
+              <h2 className="text-4xl md:text-5xl font-black text-primary-green uppercase tracking-tighter whitespace-nowrap">
+                Why use Resume X-Ray?
+              </h2>
+            </div>
+
+            {/* Reality Content vertically stacked below heading */}
+            <div className="space-y-12">
+              <div className="space-y-6">
+                <h3 className="text-2xl md:text-3xl font-bold text-primary-green leading-tight max-w-lg">
+                  In 2026, <span className="italic serif text-cream/70">98% of resumes</span> are filtered by "Black Box" AI systems.
+                </h3>
+                <p className="text-primary-green/70 font-medium text-lg leading-relaxed max-w-md">
+                  Students are being ghosted because resumes are <span className="text-primary-green font-bold">mathematically invisible</span> to non-semantic algorithms.
+                </p>
+              </div>
+
+              <div className="space-y-6 border-t border-primary-green/10 pt-10 max-w-md">
+                <p className="text-primary-green/70 font-medium text-lg leading-relaxed">
+                  Candidates lack visibility into how machines parse their identity, leading to profound <span className="italic serif text-cream/70">frustration and bias.</span>
+                </p>
+                <div className="h-[2px] w-24 bg-primary-green/20" />
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Floating Accent */}
+        <motion.div 
+           animate={{ rotate: 360 }} 
+           transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+           className="absolute -right-[15%] -top-[15%] w-[40vw] h-[40vw] rounded-full border border-primary-green/5 pointer-events-none"
+        />
+      </section>
+
+      {/* ── SECTION 3: AUTH SCREEN ────────────────────────── */}
       <section
         ref={authSectionRef}
         id="auth-section"

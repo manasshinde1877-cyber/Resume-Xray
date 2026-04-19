@@ -16,6 +16,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // ── DEV BYPASS LOGIC ────────────────────────────────
+    const bypassUser = typeof window !== 'undefined' ? localStorage.getItem('dev_bypass_user') : null;
+    if (bypassUser) {
+      setUser(JSON.parse(bypassUser));
+      setLoading(false);
+      return;
+    }
+    // ────────────────────────────────────────────────────
+
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
