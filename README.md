@@ -7,6 +7,11 @@ Resume-Xray is AI-driven career-tech platform designed to provide job seekers wi
 
 ---
 
+## 🚀 Deployment
+Live at: [https://resumexray-gamma.vercel.app/](https://resumexray-gamma.vercel.app/)
+
+---
+
 ## ✨ Features
 
 - **🧠 Agentic Resume Parsing:** Utilizing state-of-the-art AI agents to extract deep semantic meaning, not just keywords.
