@@ -6,7 +6,7 @@ import { ArrowRight, Sparkles, LogIn, UserPlus, ShieldCheck, Mail, Lock, Chevron
 import Link from "next/link";
 import { RepellingCubes } from "@/components/RepellingCubes";
 
-import { registerUser, loginUser, loginWithGoogle, loginWithApple } from "@/lib/firebase/auth";
+import { registerUser, loginUser, loginWithGoogle } from "@/lib/firebase/auth";
 import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
@@ -57,18 +57,7 @@ export default function LandingPage() {
     }
   };
 
-  const handleAppleAuth = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      await loginWithApple();
-      router.push("/dashboard");
-    } catch (err: any) {
-      setError(err.message || "Apple Auth failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   // Parallax for floating images
   const y1 = useTransform(scrollY, [0, 500], [0, -100]);
@@ -97,7 +86,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: "easeOut" }}
-              className="text-[20vw] md:text-[22vw] font-black text-cream/30 tracking-tight leading-[0.75] uppercase"
+              className="text-[18vw] md:text-[22vw] font-black text-cream/30 tracking-tight leading-[0.75] uppercase"
             >
               RESUME
             </motion.h1>
@@ -105,7 +94,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-              className="text-[20vw] md:text-[22vw] font-black text-cream/30 tracking-tight leading-[0.75] uppercase"
+              className="text-[18vw] md:text-[22vw] font-black text-cream/30 tracking-tight leading-[0.75] uppercase"
             >
               X-RAY
             </motion.h1>
@@ -116,7 +105,7 @@ export default function LandingPage() {
         <div className="relative z-20 w-full h-full flex items-center justify-center">
           <motion.div
             style={{ y: springY1, rotate: rotate1 }}
-            className="absolute top-[15%] left-[5%] md:left-[10%] w-[40vw] md:w-[25vw] h-auto aspect-[3/4] max-w-[400px] z-30 cursor-pointer"
+            className="absolute top-[12%] left-[-5%] md:left-[10%] w-[38vw] md:w-[25vw] h-auto aspect-[3/4] max-w-[320px] z-30 cursor-pointer"
           >
             <motion.div
               animate={{ y: [0, -20, 0] }}
@@ -139,7 +128,7 @@ export default function LandingPage() {
 
           <motion.div
             style={{ y: springY2, rotate: rotate2 }}
-            className="absolute bottom-[20%] right-[5%] md:top-[18%] md:right-[10%] w-[35vw] md:w-[25vw] h-auto aspect-[3/4] max-w-[400px] z-30 cursor-pointer"
+            className="absolute bottom-[28%] right-[-5%] md:top-[18%] md:right-[10%] w-[32vw] md:w-[25vw] h-auto aspect-[3/4] max-w-[320px] z-30 cursor-pointer"
           >
             <motion.div
               animate={{ y: [0, 20, 0] }}
@@ -182,7 +171,7 @@ export default function LandingPage() {
           >
             <button
               onClick={scrollToAuth}
-              className="group w-full md:w-auto px-8 md:px-10 py-4 md:py-5 bg-primary-green text-cream font-bold rounded-2xl hover:bg-sage transition-all duration-300 shadow-2xl hover:scale-105 flex items-center justify-center gap-3 text-base md:text-lg"
+              className="group w-full md:w-auto px-6 md:px-10 py-3.5 md:py-5 bg-primary-green text-cream font-bold rounded-2xl hover:bg-sage transition-all duration-300 shadow-2xl hover:scale-105 flex items-center justify-center gap-3 text-sm md:text-lg"
             >
               Login / Get Started <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -211,41 +200,43 @@ export default function LandingPage() {
             viewport={{ once: false, amount: 0.3 }}
             className="relative flex items-center justify-center h-full min-h-[500px]"
           >
-            {/* Boy Avatar (Main Focus - Now behind frame) */}
-            <motion.div
-              animate={{
-                y: [0, -15, 0],
-                x: ["-50%", "-50%", "-50%"]
-              }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-[80%] top-1/2 w-[57%] h-auto z-10 -translate-x-1/2 -translate-y-1/2"
-            >
-              <img
-                src="/landing/Boy.png"
-                alt="Boy Avatar"
-                className="w-full h-full object-contain filter drop-shadow-2xl"
-                style={{ transform: "scaleX(-1)" }}
-              />
-            </motion.div>
-
-            {/* Decorative Frame (Overlay Container) */}
-            <motion.div
-              animate={{
-                y: [0, -20, 0],
-                rotate: [0, 1, 0, -1, 0]
-              }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="relative w-full h-full flex items-center justify-center p-4 z-20"
-            >
-              <img
-                src="/landing/Frame.png"
-                alt="Vision Frame"
-                className="w-full max-w-[500px] object-contain drop-shadow-[0_20px_50px_rgba(84,107,65,0.15)]"
-                style={{
-                  filter: "brightness(0) saturate(100%) invert(98%) sepia(21%) saturate(220%) hue-rotate(344deg) brightness(101%) contrast(101%)"
+            {/* Visual Container */}
+            <div className="relative w-full max-w-[500px] aspect-square flex items-center justify-center">
+              {/* Boy Avatar (Main Focus) */}
+              <motion.div
+                animate={{
+                  y: [0, -15, 0],
                 }}
-              />
-            </motion.div>
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute z-10 w-[45%] h-auto pointer-events-none left-1/2 top-[75%] md:top-1/2 -translate-x-1/2 -translate-y-1/2"
+              >
+                <img
+                  src="/landing/Boy.png"
+                  alt="Boy Avatar"
+                  className="w-full h-full object-contain filter drop-shadow-2xl"
+                  style={{ transform: "scaleX(-1)" }}
+                />
+              </motion.div>
+
+              {/* Decorative Frame - Hidden on mobile */}
+              <motion.div
+                animate={{
+                  y: [0, -15, 0], // Synchronized with Boy
+                  rotate: [0, 1, 0, -1, 0]
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full h-full hidden md:flex items-center justify-center z-20 pointer-events-none"
+              >
+                <img
+                  src="/landing/Frame.png"
+                  alt="Vision Frame"
+                  className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(84,107,65,0.15)]"
+                  style={{
+                    filter: "brightness(0) saturate(100%) invert(98%) sepia(21%) saturate(220%) hue-rotate(344deg) brightness(101%) contrast(101%)"
+                  }}
+                />
+              </motion.div>
+            </div>
           </motion.div>
 
           {/* Right Side: Content */}
@@ -254,14 +245,14 @@ export default function LandingPage() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             viewport={{ once: false, amount: 0.3 }}
-            className="flex flex-col gap-12"
+            className="flex flex-col gap-12 pt-10 md:pt-0"
           >
             {/* Heading in a single line */}
             <div className="space-y-4">
               <span className="text-[10px] font-black text-primary-green/40 uppercase tracking-[0.8em] block">
                 The New Standard
               </span>
-              <h2 className="text-4xl md:text-5xl font-black text-primary-green uppercase tracking-tighter whitespace-nowrap">
+              <h2 className="text-3xl md:text-5xl font-black text-primary-green uppercase tracking-tighter">
                 Why use Resume X-Ray?
               </h2>
             </div>
@@ -299,7 +290,7 @@ export default function LandingPage() {
       <section
         ref={authSectionRef}
         id="auth-section"
-        className="relative min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-12 snap-start py-20"
+        className="relative min-h-screen w-full flex flex-col items-center justify-center p-6 md:p-12 snap-start py-24 md:py-32"
       >
         <div className="absolute inset-0 bg-[#F2EBE0] -z-10" />
         <RepellingCubes />
@@ -310,9 +301,9 @@ export default function LandingPage() {
             initial={{ opacity: 0, y: -20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="w-full text-center md:text-left"
+            className="w-full text-center md:text-left mb-12 md:mb-0 relative z-50"
           >
-            <h2 className="text-4xl md:text-6xl font-black text-primary-green leading-tight">
+            <h2 className="text-3xl md:text-6xl font-black text-primary-green leading-tight">
               Join the <span className="italic font-light serif text-sage md:relative md:top-4">New Frontier.</span>
             </h2>
           </motion.div>
@@ -401,24 +392,14 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col md:flex-row gap-3">
+                  <div className="flex flex-col gap-3">
                     <button
                       onClick={handleGoogleAuth}
                       disabled={loading}
-                      className="flex-1 py-4 bg-white border border-primary-green/20 text-primary-green font-bold rounded-xl md:rounded-2xl hover:bg-primary-green/5 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
+                      className="w-full py-4 bg-white border border-primary-green/20 text-primary-green font-bold rounded-xl md:rounded-2xl hover:bg-primary-green/5 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
                     >
                       <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" className="w-4 h-4" alt="Google" />
-                      Google
-                    </button>
-
-                    <button
-                      onClick={handleAppleAuth}
-                      disabled={loading}
-                      className="flex-1 py-4 bg-black text-white font-bold rounded-xl md:rounded-2xl hover:bg-zinc-900 transition-all duration-300 flex items-center justify-center gap-2 text-sm group disabled:opacity-50"
-                    >
-                      {/* Apple SVG Icon */}
-                      <svg viewBox="0 0 384 512" className="w-4 h-4 fill-current"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 21.8-88.5 21.8-11.4 0-51.1-20.8-83.6-20.1-41.2.9-82 23.3-103.1 60.1-23.5 40.8-18 107.9 4.3 172.6 11.2 32.2 26 67.2 49 90.5 22.1 22.3 45.8 47 74.4 46 28.1-1.1 38.2-18.1 77.7-18.1s48.6 18.1 77.7 17.1c28.2-1.1 51.5-22.1 73.6-45.2 22.5-23.5 31.5-46.3 31.7-47.5-.6-.3-61.2-23.5-61.5-93l-.1.1zM303 12.1c-15-18.7-49.9-13.5-67.4 8.7-19.1 24.5-15.2 59.6 12.4 76 2.3 1.5 51.3 20 68.6-23.5 5.9-14.9 1.5-42.5-13.6-61.2z" /></svg>
-                      Apple
+                      Continue with Google
                     </button>
                   </div>
                 </div>
@@ -448,7 +429,7 @@ export default function LandingPage() {
             </div>
 
             {/* Right: Frame Visual */}
-            <div className="relative h-[400px] md:h-[500px] w-full flex items-center justify-center order-1 md:order-2">
+            <div className="relative h-[280px] md:h-[500px] w-full flex items-center justify-center order-1 md:order-2 mb-8 md:mb-0">
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
@@ -469,28 +450,19 @@ export default function LandingPage() {
                   />
                 </motion.div>
 
-                {/* Frame */}
+                {/* Frame - Hidden on mobile */}
                 <motion.div
                   initial={{ y: 20, opacity: 1 }}
                   whileInView={{ y: -30, opacity: 1 }}
                   transition={{ duration: 1.2, ease: "easeOut" }}
                   viewport={{ once: false }}
-                  className="absolute z-20 w-[95%] md:w-[85%] h-auto pointer-events-none flex items-center justify-center"
+                  className="absolute z-20 w-[95%] md:w-[85%] h-auto pointer-events-none hidden md:flex items-center justify-center"
                 >
                   <img
                     src="/landing/Frame.png"
                     alt="Framing Excellence"
                     className="w-full h-auto filter drop-shadow-[0_30px_60px_rgba(0,0,0,0.3)]"
                   />
-                  {/* Tagline nested inside frame to scale perfectly */}
-                  <motion.p
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, delay: 0.8 }}
-                    className="absolute bottom-[10%] md:bottom-[20%] left-0 right-0 text-center text-primary-green font-bold text-[35px] md:text-[16px] leading-relaxed uppercase tracking-[0.1em] md:tracking-[0.14em] z-30 pointer-events-auto px-10"
-                  >
-                    Unlock deep <br className="hidden md:block" />semantic insights.
-                  </motion.p>
                 </motion.div>
               </motion.div>
             </div>
